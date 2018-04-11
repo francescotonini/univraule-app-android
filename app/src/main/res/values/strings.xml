@@ -1,0 +1,51 @@
+<!--
+  ~ The MIT License (MIT)
+  ~
+  ~ Copyright (c) 2018 Francesco Tonini <francescoantoniotonini@gmail.com>
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<resources>
+    <string name="app_name">UniVR Aule</string>
+    <string name="activity_offices_title">Seleziona sedi</string>
+    <string name="activity_main_title">Aule libere</string>
+    <string name="activity_settings_title">Impostazioni</string>
+
+    <string name="generic_error_title">Ops!</string>
+    <string name="generic_error_message">Qualcosa è andato storto. Riprova più tardi :(</string>
+
+    <string name="item_room_available_for">libera per</string>
+    <string name="item_room_busy_from">occupata dalle</string>
+    <string name="item_room_busy_for">libera tra</string>
+    <string name="item_room_available_from">libera dalle</string>
+
+    <string name="menu_offices_save">Salva</string>
+    <string name="menu_main_search">Cerca</string>
+    <string name="menu_main_change_offices">Cambia sedi</string>
+    <string name="menu_main_settings">Impostazioni</string>
+
+    <string name="preferences_clear_db_title">Pulisci cache orari</string>
+    <string name="preferences_clear_db_summary">Se rimuovi i dati in locale l\'app dovrà riscaricare gli orari dal sito dell\'ateneo</string>
+    <string name="preferences_created_by_title">Info</string>
+    <string name="preferences_created_by_summary">UniVR Orari è stata sviluppata da Francesco Tonini. Gli orari vengono scaricati da logistica.univr.it</string>
+    <string name="preferences_leave_feedback_title">Dubbi, domande, angosce?</string>
+    <string name="preferences_leave_feedback_summary">Hai un\'idea per migliorare l\'app? Vuoi segnalare un malfunzionamento! Clicca qui per farmelo sapere ;)</string>
+    <string name="preferences_app_version">Versione app</string>
+</resources>
