@@ -27,12 +27,13 @@ package it.francescotonini.univraule.views;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.pixplicity.easyprefs.library.Prefs;
-
 import it.francescotonini.univraule.Logger;
 import it.francescotonini.univraule.R;
 import it.francescotonini.univraule.adapters.OfficesAdapter;
@@ -43,7 +44,8 @@ import it.francescotonini.univraule.viewmodels.OfficesViewModel;
 /**
  * Activity of R.layout.activity_offices
  */
-public class OfficesActivity extends BaseActivity {
+public class OfficesActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,
+        View.OnClickListener {
     @Override protected int getLayoutId() {
         return R.layout.activity_offices;
     }
@@ -65,19 +67,8 @@ public class OfficesActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, getLayoutId());
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_offices, menu);
-        return true;
-    }
-
     @Override public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_offices_save) {
-            getViewModel().saveOffices(adapter.getSelectedOffices());
-            Prefs.putBoolean("isFirstStart", false);
-            startActivity(new Intent(this, MainActivity.class));
-            return true;
-        }
-        else if (item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
         }
@@ -90,6 +81,7 @@ public class OfficesActivity extends BaseActivity {
 
         adapter = new OfficesAdapter();
         binding.activityOfficesRecyclerView.setAdapter(adapter);
+        binding.activityOfficesSaveButton.setOnClickListener(this);
     }
 
     @Override protected void onResume() {
@@ -108,6 +100,16 @@ public class OfficesActivity extends BaseActivity {
             binding.activityOfficesRefreshlayout.setRefreshing(false);
             adapter.update(offices);
         });
+    }
+
+    @Override public void onRefresh() {
+        onResume();
+    }
+
+    @Override public void onClick(View v) {
+        getViewModel().saveOffices(adapter.getSelectedOffices());
+        Prefs.putBoolean("isFirstStart", false);
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     private OfficesAdapter adapter;
