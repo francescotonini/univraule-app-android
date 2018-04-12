@@ -50,4 +50,5 @@
     <string name="preferences_leave_feedback_title">Dubbi, domande, angosce?</string>
     <string name="preferences_leave_feedback_summary">Hai un\'idea per migliorare l\'app? Vuoi segnalare un malfunzionamento! Clicca qui per farmelo sapere ;)</string>
     <string name="preferences_app_version">Versione app</string>
+    <string name="preferences_clean_db_result">Fatto!</string>
 </resources>

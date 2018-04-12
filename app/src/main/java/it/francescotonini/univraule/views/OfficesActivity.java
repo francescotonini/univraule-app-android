@@ -38,6 +38,7 @@ import it.francescotonini.univraule.R;
 import it.francescotonini.univraule.adapters.OfficesAdapter;
 import it.francescotonini.univraule.databinding.ActivityOfficesBinding;
 import it.francescotonini.univraule.helpers.AlertDialogHelper;
+import it.francescotonini.univraule.helpers.SnackBarHelper;
 import it.francescotonini.univraule.viewmodels.OfficesViewModel;
 
 /**
@@ -89,7 +90,7 @@ public class OfficesActivity extends BaseActivity implements SwipeRefreshLayout.
         binding.activityOfficesRefreshlayout.setRefreshing(true);
         getViewModel().getOffices().observe(this, offices -> {
             if (offices == null) {
-                AlertDialogHelper.show(getCurrentActivity(), R.string.error_generic_title, R.string.error_generic_message);
+                SnackBarHelper.show(binding.activityOfficesRecyclerView, R.string.error_generic_message);
 
                 return;
             }

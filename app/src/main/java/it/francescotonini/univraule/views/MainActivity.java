@@ -32,12 +32,11 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import it.francescotonini.univraule.Logger;
 import it.francescotonini.univraule.R;
 import it.francescotonini.univraule.adapters.RoomsAdapter;
 import it.francescotonini.univraule.databinding.ActivityMainBinding;
-import it.francescotonini.univraule.helpers.AlertDialogHelper;
+import it.francescotonini.univraule.helpers.SnackBarHelper;
 import it.francescotonini.univraule.viewmodels.RoomsViewModel;
 
 /**
@@ -97,7 +96,7 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
         binding.activityMainRefreshlayout.setRefreshing(true);
         getViewModel().getRooms().observe(this, rooms -> {
             if (rooms == null) {
-                AlertDialogHelper.show(getCurrentActivity(), R.string.error_generic_title, R.string.error_generic_message);
+                SnackBarHelper.show(binding.activityMainRecyclerView, R.string.error_generic_message);
 
                 return;
             }
