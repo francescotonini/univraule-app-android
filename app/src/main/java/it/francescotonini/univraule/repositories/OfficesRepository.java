@@ -26,6 +26,8 @@ package it.francescotonini.univraule.repositories;
 
 import android.arch.lifecycle.MutableLiveData;
 import java.util.List;
+
+import it.francescotonini.univraule.Logger;
 import it.francescotonini.univraule.models.Office;
 import it.francescotonini.univraule.views.BaseActivity;
 import retrofit2.Call;
@@ -71,6 +73,8 @@ public class OfficesRepository extends BaseRepository {
                 }
 
                 @Override public void onFailure(Call<List<Office>> call, Throwable t) {
+                    Logger.e(OfficesRepository.class.getSimpleName(), t.getMessage());
+
                     offices.setValue(null);
                 }
             });
