@@ -28,8 +28,10 @@
     <string name="activity_main_title">Aule libere</string>
     <string name="activity_settings_title">Impostazioni</string>
 
-    <string name="generic_error_title">Ops!</string>
-    <string name="generic_error_message">Qualcosa è andato storto. Riprova più tardi :(</string>
+    <string name="error_generic_title">Ops!</string>
+    <string name="error_generic_message">Qualcosa è andato storto. Riprova più tardi :(</string>
+    <string name="error_no_offices_selected_title">Errore</string>
+    <string name="error_no_offices_selected_message">Nessuna sede selezionata! Riprova</string>
 
     <string name="item_room_available_for">libera per</string>
     <string name="item_room_busy_from">occupata dalle</string>

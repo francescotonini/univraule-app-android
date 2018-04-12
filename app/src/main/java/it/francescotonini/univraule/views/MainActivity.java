@@ -27,15 +27,11 @@ package it.francescotonini.univraule.views;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.transition.TransitionManager;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 
 import it.francescotonini.univraule.Logger;
 import it.francescotonini.univraule.R;
@@ -101,7 +97,7 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
         binding.activityMainRefreshlayout.setRefreshing(true);
         getViewModel().getRooms().observe(this, rooms -> {
             if (rooms == null) {
-                AlertDialogHelper.show(getCurrentActivity(), R.string.generic_error_title, R.string.generic_error_message);
+                AlertDialogHelper.show(getCurrentActivity(), R.string.error_generic_title, R.string.error_generic_message);
 
                 return;
             }

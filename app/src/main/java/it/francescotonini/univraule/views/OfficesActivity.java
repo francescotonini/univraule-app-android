@@ -29,7 +29,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -90,7 +89,7 @@ public class OfficesActivity extends BaseActivity implements SwipeRefreshLayout.
         binding.activityOfficesRefreshlayout.setRefreshing(true);
         getViewModel().getOffices().observe(this, offices -> {
             if (offices == null) {
-                AlertDialogHelper.show(getCurrentActivity(), R.string.generic_error_title, R.string.generic_error_message);
+                AlertDialogHelper.show(getCurrentActivity(), R.string.error_generic_title, R.string.error_generic_message);
 
                 return;
             }
@@ -107,6 +106,11 @@ public class OfficesActivity extends BaseActivity implements SwipeRefreshLayout.
     }
 
     @Override public void onClick(View v) {
+        if (adapter.getSelectedOffices().size() == 0) {
+            AlertDialogHelper.show(this, R.string.error_no_offices_selected_title, R.string.error_no_offices_selected_message);
+            return;
+        }
+
         getViewModel().saveOffices(adapter.getSelectedOffices());
         Prefs.putBoolean("isFirstStart", false);
         startActivity(new Intent(this, MainActivity.class));
