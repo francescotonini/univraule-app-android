@@ -38,6 +38,12 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue("bool", "FIREBASE_CRASH_ENABLED", "true")
+            resValue("bool", "firebase_analytics_collection_enabled", "true")
+        }
+        debug {
+            resValue("bool", "FIREBASE_CRASH_ENABLED", "false")
+            resValue("bool", "firebase_analytics_collection_enabled", "false")
         }
     }
     dataBinding.enabled = true
