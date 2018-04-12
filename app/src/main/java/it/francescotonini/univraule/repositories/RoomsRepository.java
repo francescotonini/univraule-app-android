@@ -110,6 +110,8 @@ public class RoomsRepository extends BaseRepository {
                         }
 
                         @Override public void onFailure(Call<List<Room>> call, Throwable t) {
+                            Logger.e(OfficesRepository.class.getSimpleName(), t.getMessage());
+
                             rooms.setValue(null);
                         }
                     });

@@ -34,6 +34,8 @@ import android.widget.Filter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import it.francescotonini.univraule.Logger;
 import it.francescotonini.univraule.R;
 import it.francescotonini.univraule.databinding.ItemRoomBinding;
 import it.francescotonini.univraule.helpers.DateToStringFormatter;
@@ -154,10 +156,13 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
                 binding.itemRoomTimeDescriptionText.setText(R.string.item_room_busy_from);
                 binding.itemRoomEtaDescriptionText.setText(R.string.item_room_available_for);
                 binding.itemRoomTimeText.setText(DateToStringFormatter.getTimeString(nextEvent.getStartTimestamp()));
-                binding.itemRoomEtaText.setText(DateToStringFormatter.getETAString(nextEvent.getEndTimestamp()));
+                binding.itemRoomEtaText.setText(DateToStringFormatter.getETAString(nextEvent.getStartTimestamp()));
 
                 binding.itemRoomTopRelativelayout.setBackgroundResource(R.color.dark_green);
                 binding.itemRoomBottomLinearlayout.setBackgroundResource(R.color.green);
+            }
+            else {
+                Logger.e(RoomsAdapter.class.getSimpleName(), "Both nextEvent and nowEvent are null.");
             }
         }
 

@@ -26,16 +26,14 @@ package it.francescotonini.univraule.views;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
-
 import it.francescotonini.univraule.App;
 import it.francescotonini.univraule.R;
-import it.francescotonini.univraule.helpers.AlertDialogHelper;
+import it.francescotonini.univraule.helpers.SnackBarHelper;
 import it.francescotonini.univraule.viewmodels.SettingsViewModel;
 
 @SuppressLint("ValidFragment")
@@ -71,6 +69,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
         switch (preference.getKey()) {
             case "clear_db":
                 viewModel.clearDB();
+                SnackBarHelper.show(this.getView(), R.string.preferences_clean_db_result);
                 break;
             case "leave_feedback":
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:francescoantoniotonini@gmail.com"));

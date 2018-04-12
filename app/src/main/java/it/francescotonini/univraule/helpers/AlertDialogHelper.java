@@ -24,8 +24,10 @@
 
 package it.francescotonini.univraule.helpers;
 
-import android.app.AlertDialog;
-import android.content.Context;
+import android.support.v7.app.AlertDialog;
+import android.content.DialogInterface;
+
+import it.francescotonini.univraule.views.BaseActivity;
 
 /**
  * Handles Alerts boilerplate
@@ -33,29 +35,39 @@ import android.content.Context;
 public class AlertDialogHelper {
     /**
      * Creates and shows an AlertDialog
-     * @param context context
+     * @param baseActivity base activity
      * @param title title
      * @param message message
      */
-    public static void show(Context context, String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    public static void show(BaseActivity baseActivity, String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(baseActivity);
         builder.setTitle(title);
         builder.setMessage(message);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
 
-        builder.show();
+            }
+        });
+
+        builder.create().show();
     }
 
     /**
      * Creates and shows an AlertDialog
-     * @param context context
+     * @param baseActivity context
      * @param title title
      * @param message message
      */
-    public static void show(Context context, int title, int message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    public static void show(BaseActivity baseActivity, int title, int message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(baseActivity);
         builder.setTitle(title);
         builder.setMessage(message);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
 
-        builder.show();
+            }
+        });
+
+        builder.create().show();
     }
 }
