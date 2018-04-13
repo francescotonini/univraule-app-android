@@ -27,16 +27,14 @@
     <color name="primary_dark">#FFA726</color>
     <color name="primary">#FFB74D</color>
     <color name="accent">#29B6F6</color>
-
+    <color name="divider">#E6E6E6</color>
     <color name="background">#F5F5F5</color>
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#757575</color>
 
     <color name="green">#67AF83</color>
     <color name="dark_green">#62A67D</color>
-
     <color name="red">#DE7572</color>
     <color name="dark_red">#DB635F</color>
-
     <color name="white_70">#B3FFFFFF</color>
 </resources>

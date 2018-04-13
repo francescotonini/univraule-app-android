@@ -33,11 +33,14 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.pixplicity.easyprefs.library.Prefs;
+
+import it.francescotonini.univraule.App;
 import it.francescotonini.univraule.Logger;
 import it.francescotonini.univraule.R;
 import it.francescotonini.univraule.adapters.OfficesAdapter;
 import it.francescotonini.univraule.databinding.ActivityOfficesBinding;
 import it.francescotonini.univraule.helpers.AlertDialogHelper;
+import it.francescotonini.univraule.helpers.SimpleDividerItemDecoration;
 import it.francescotonini.univraule.helpers.SnackBarHelper;
 import it.francescotonini.univraule.viewmodels.OfficesViewModel;
 
@@ -80,6 +83,7 @@ public class OfficesActivity extends BaseActivity implements SwipeRefreshLayout.
         super.onCreate(savedInstanceState);
 
         adapter = new OfficesAdapter();
+        binding.activityOfficesRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(App.getContext(), this.getResources().getColor(R.color.divider), 3));
         binding.activityOfficesRecyclerView.setAdapter(adapter);
         binding.activityOfficesSaveButton.setOnClickListener(this);
     }
