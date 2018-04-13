@@ -52,6 +52,9 @@
                 android:layout_marginRight="@dimen/spacing_large"
                 android:textColor="@android:color/white"
                 tools:text="Room"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:ellipsize="end"
                 style="@style/cell_primary_text_view" />
 
             <!-- Second row -->
@@ -65,6 +68,9 @@
                 android:layout_marginBottom="@dimen/spacing_medium"
                 android:orientation="horizontal"
                 tools:text="Room"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:ellipsize="end"
                 style="@style/cell_secondary_text_view" />
 
             <LinearLayout
