@@ -142,6 +142,29 @@ public class Room implements Comparator<Room> {
      */
     public Room.Event getCurrentEvent() {
         Date now = new Date();
+        Calendar today = Calendar.getInstance();
+
+        // Check if today is sunday
+        if (today.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            return getCloseEvent();
+        }
+
+        // Are you using the app after the department closed?
+        if (now.after(getClosingCalendar().getTime())) {
+            return getCloseEvent();
+        }
+
+        // Are you here before opening time?
+        if (now.before(getOpeningCalendar().getTime())) {
+            Event e = new Room.Event();
+            e.name = "Aula chiusa.";
+            e.setStartTimestamp(now.getTime() / 1000L);
+            e.setEndTimestamp(getOpeningCalendar().getTime().getTime() / 1000L);
+
+            return e;
+        }
+
+        // Check for events
         for (Room.Event e : getEvents()) {
             Date startTime = new Date(e.getStartTimestamp());
             Date endTime = new Date(e.getEndTimestamp());
@@ -151,15 +174,23 @@ public class Room implements Comparator<Room> {
             }
         }
 
+        return null;
+    }
+
+    private Calendar getClosingCalendar() {
         Calendar closingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
         closingCalendar.set(Calendar.HOUR_OF_DAY, 19);
         closingCalendar.set(Calendar.MINUTE, 30);
 
-        if (now.after(closingCalendar.getTime())) {
-            return getCloseEvent();
-        }
+        return closingCalendar;
+    }
 
-        return null;
+    private Calendar getOpeningCalendar() {
+        Calendar openingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
+        openingCalendar.set(Calendar.HOUR_OF_DAY, 7);
+        openingCalendar.set(Calendar.MINUTE, 30);
+
+        return openingCalendar;
     }
 
     /**

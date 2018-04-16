@@ -44,7 +44,7 @@
     <string name="menu_main_change_offices">Cambia sedi</string>
     <string name="menu_main_settings">Impostazioni</string>
 
-    <string name="preferences_clear_db_title">Pulisci cache orari</string>
+    <string name="preferences_clear_db_title">Pulisci cache aule</string>
     <string name="preferences_clear_db_summary">Se rimuovi i dati in locale l\'app dovrà riscaricare lo stato delle aule dal sito dell\'ateneo</string>
     <string name="preferences_created_by_title">Info</string>
     <string name="preferences_created_by_summary">UniVR Aule è stata sviluppata da Francesco Tonini. I dati sulle aule vengono scaricati da logistica.univr.it</string>
