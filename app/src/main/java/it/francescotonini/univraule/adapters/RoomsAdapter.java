@@ -115,8 +115,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
 
         List<Room> filteredRooms = new ArrayList<>();
         for (Room room : rooms) {
-            if (room.getName().toLowerCase().contains(queryValue.toLowerCase()) ||
-                    room.getOfficeName().toLowerCase().contains(queryValue.toLowerCase())) {
+            if (room.getName().toLowerCase().contains(queryValue.toLowerCase())) {
                 filteredRooms.add(room);
             }
         }
