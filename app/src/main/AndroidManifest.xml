@@ -36,7 +36,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/app_theme">
-        <activity android:name=".views.BootstrapActivity">
+        <activity android:name=".views.BootstrapActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,6 +52,8 @@
         <activity android:name=".views.SettingsActivity"
             android:label="@string/activity_settings_title"
             android:theme="@style/app_theme_settings"/>
+        <activity android:name=".views.RoomActivity"
+            android:label="@string/activity_room_title" />
     </application>
 
 </manifest>

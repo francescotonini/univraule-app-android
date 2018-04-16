@@ -49,8 +49,9 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
     /**
      * Initializes a new instance of this adapter
      */
-    public RoomsAdapter() {
+    public RoomsAdapter(OnItemClickListener listener) {
         queryValue = "";
+        this.listener = listener;
         rooms = new ArrayList<>();
     }
 
@@ -63,6 +64,13 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
         Collections.sort(this.rooms, ((o1, o2) -> o1.getName().compareTo(o2.getName())));
 
         this.notifyDataSetChanged();
+    }
+
+    /**
+     * Item click interface
+     */
+    public interface OnItemClickListener {
+        void onItemClick(Room room);
     }
 
     @NonNull @Override public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -107,8 +115,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
 
         List<Room> filteredRooms = new ArrayList<>();
         for (Room room : rooms) {
-            if (room.getName().toLowerCase().contains(queryValue.toLowerCase()) ||
-                    room.getOfficeName().toLowerCase().contains(queryValue.toLowerCase())) {
+            if (room.getName().toLowerCase().contains(queryValue.toLowerCase())) {
                 filteredRooms.add(room);
             }
         }
@@ -137,6 +144,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
         public void set(Room room) {
             this.room = room;
 
+            binding.getRoot().setOnClickListener(v -> listener.onItemClick(room));
             binding.itemRoomText.setText(this.room.getName());
             binding.itemRoomOfficeText.setText(this.room.getOfficeName());
 
@@ -170,6 +178,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
         private ItemRoomBinding binding;
     }
 
+    private OnItemClickListener listener;
     private String queryValue;
     private List<Room> rooms;
 }
