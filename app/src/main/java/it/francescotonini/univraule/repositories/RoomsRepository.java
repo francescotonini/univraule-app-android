@@ -68,6 +68,16 @@ public class RoomsRepository extends BaseRepository {
     }
 
     /**
+     * Gets a room that meets the criteria provided
+     * @param roomName room name
+     * @param officeName office name
+     * @return
+     */
+    public LiveData<Room> getRoom(String roomName, String officeName) {
+        return getDatabase().roomDao().getRoom(roomName, officeName);
+    }
+
+    /**
      * Deletes every {@link Room} from database
      */
     public void clearAll() {

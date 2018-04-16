@@ -37,12 +37,15 @@ import it.francescotonini.univraule.R;
 import it.francescotonini.univraule.adapters.RoomsAdapter;
 import it.francescotonini.univraule.databinding.ActivityMainBinding;
 import it.francescotonini.univraule.helpers.SnackBarHelper;
+import it.francescotonini.univraule.models.Room;
 import it.francescotonini.univraule.viewmodels.RoomsViewModel;
 
 /**
  * Activity of R.layout.activity_main
  */
-public class MainActivity extends BaseActivity implements SearchView.OnQueryTextListener, SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends BaseActivity
+        implements SearchView.OnQueryTextListener, SwipeRefreshLayout.OnRefreshListener,
+        RoomsAdapter.OnItemClickListener {
     @Override protected int getLayoutId() {
         return R.layout.activity_main;
     }
@@ -85,7 +88,7 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new RoomsAdapter();
+        adapter = new RoomsAdapter(this);
         binding.activityMainRecyclerView.setAdapter(adapter);
         binding.activityMainRefreshlayout.setOnRefreshListener(this);
     }
@@ -129,6 +132,14 @@ public class MainActivity extends BaseActivity implements SearchView.OnQueryText
 
         binding.activityMainRefreshlayout.setRefreshing(true);
         onResume();
+    }
+
+    @Override public void onItemClick(Room room) {
+        Intent i = new Intent(this, RoomActivity.class);
+        i.putExtra("roomName", room.getName());
+        i.putExtra("officeName", room.getOfficeName());
+
+        startActivity(i);
     }
 
     private RoomsAdapter adapter;

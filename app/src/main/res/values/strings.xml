@@ -27,6 +27,7 @@
     <string name="activity_offices_title">Seleziona sedi</string>
     <string name="activity_main_title">Aule libere</string>
     <string name="activity_settings_title">Impostazioni</string>
+    <string name="activity_room_title">Pianificazione aula</string>
 
     <string name="error_generic_title">Ops!</string>
     <string name="error_generic_message">Qualcosa è andato storto. Riprova più tardi :(</string>
