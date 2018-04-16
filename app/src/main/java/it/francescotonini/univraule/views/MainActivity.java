@@ -32,6 +32,8 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import java.util.Calendar;
 import it.francescotonini.univraule.Logger;
 import it.francescotonini.univraule.R;
 import it.francescotonini.univraule.adapters.RoomsAdapter;
@@ -96,6 +98,16 @@ public class MainActivity extends BaseActivity
     @Override protected void onResume() {
         super.onResume();
 
+        // If today is sunday, show a message
+        if (Calendar.getInstance().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            binding.activityMainRefreshlayout.setVisibility(View.GONE);
+            binding.activityMainAlternativeText.setVisibility(View.VISIBLE);
+            binding.activityMainAlternativeText.setText(R.string.activity_main_sunday);
+
+            return;
+        }
+
+        // Standard loading
         binding.activityMainRefreshlayout.setRefreshing(true);
         getViewModel().getRooms().observe(this, rooms -> {
             if (rooms == null) {

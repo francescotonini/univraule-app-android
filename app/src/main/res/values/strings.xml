@@ -29,6 +29,8 @@
     <string name="activity_settings_title">Impostazioni</string>
     <string name="activity_room_title">Pianificazione aula</string>
 
+    <string name="activity_main_sunday">Oggi è domenica, l\'università è chiusa! Riprova domani ;)</string>
+
     <string name="error_generic_title">Ops!</string>
     <string name="error_generic_message">Qualcosa è andato storto. Riprova più tardi :(</string>
     <string name="error_no_offices_selected_title">Errore</string>

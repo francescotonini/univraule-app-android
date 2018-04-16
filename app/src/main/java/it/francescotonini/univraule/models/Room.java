@@ -142,14 +142,8 @@ public class Room implements Comparator<Room> {
      */
     public Room.Event getCurrentEvent() {
         Date now = new Date();
-        Calendar today = Calendar.getInstance();
 
-        // Check if today is sunday
-        if (today.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-            return getCloseEvent();
-        }
-
-        // Are you using the app after the department closed?
+        // Are you using the app after the uni closed?
         if (now.after(getClosingCalendar().getTime())) {
             return getCloseEvent();
         }
@@ -157,7 +151,6 @@ public class Room implements Comparator<Room> {
         // Are you here before opening time?
         if (now.before(getOpeningCalendar().getTime())) {
             Event e = new Room.Event();
-            e.name = "Aula chiusa.";
             e.setStartTimestamp(now.getTime() / 1000L);
             e.setEndTimestamp(getOpeningCalendar().getTime().getTime() / 1000L);
 

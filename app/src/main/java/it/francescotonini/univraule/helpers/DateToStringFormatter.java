@@ -38,7 +38,7 @@ public class DateToStringFormatter {
         long secs = (end.getTime() - now.getTime()) / 1000;
         long hours = secs / 3600;
         secs = secs % 3600;
-        long mins = secs / 60;
+        long mins = (secs / 60) + 1; // +1 --> approx.
 
         String output = "";
         if (hours > 0) {

@@ -27,6 +27,8 @@ package it.francescotonini.univraule.views;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+
 import com.alamkanak.weekview.MonthLoader.MonthChangeListener;
 import com.alamkanak.weekview.WeekViewEvent;
 import java.util.ArrayList;
@@ -45,6 +47,8 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
 
     @Override protected void setToolbar() {
         setSupportActionBar((Toolbar)binding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override protected RoomViewModel getViewModel() {
@@ -78,6 +82,15 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
             events = result;
             binding.activityRoomWeekView.notifyDatasetChanged();
         });
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
