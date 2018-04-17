@@ -95,6 +95,7 @@
                         android:layout_marginRight="@dimen/spacing_large"
                         android:layout_centerHorizontal="true"
                         android:orientation="horizontal"
+                        android:layout_below="@id/item_room_time_description_text"
                         tools:text="--"
                         style="@style/cell_big_text_view" />
 
@@ -102,15 +103,12 @@
                         android:id="@+id/item_room_time_description_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/item_room_time_text"
                         android:layout_marginLeft="@dimen/spacing_large"
                         android:layout_marginRight="@dimen/spacing_large"
                         android:layout_centerHorizontal="true"
                         android:orientation="horizontal"
                         tools:text="--"
                         style="@style/cell_tertiary_text_view" />
-
-
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -126,6 +124,7 @@
                         android:layout_marginRight="@dimen/spacing_large"
                         android:layout_centerHorizontal="true"
                         android:orientation="horizontal"
+                        android:layout_below="@id/item_room_eta_description_text"
                         tools:text="--"
                         style="@style/cell_big_text_view" />
 
@@ -133,14 +132,12 @@
                         android:id="@+id/item_room_eta_description_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/item_room_eta_text"
                         android:layout_marginLeft="@dimen/spacing_large"
                         android:layout_marginRight="@dimen/spacing_large"
                         android:layout_centerHorizontal="true"
                         android:orientation="horizontal"
                         tools:text="--"
                         style="@style/cell_tertiary_text_view" />
-
                 </RelativeLayout>
 
             </LinearLayout>
