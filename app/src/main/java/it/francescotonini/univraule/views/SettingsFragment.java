@@ -73,7 +73,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
                 break;
             case "leave_feedback":
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:francescoantoniotonini@gmail.com"));
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "UniVR Orari - Feedback");
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "UniVR Aule - Feedback");
                 startActivity(emailIntent);
                 break;
         }
