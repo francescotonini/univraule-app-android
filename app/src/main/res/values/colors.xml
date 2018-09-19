@@ -24,9 +24,9 @@
   -->
 
 <resources>
-    <color name="primary_dark">#FFA726</color>
-    <color name="primary">#FFB74D</color>
-    <color name="accent">#29B6F6</color>
+    <color name="primary_dark">#002F6C</color>
+    <color name="primary">#01579B</color>
+    <color name="accent">#FF5963</color>
     <color name="divider">#E6E6E6</color>
     <color name="background">#F5F5F5</color>
     <color name="primary_text">#212121</color>
