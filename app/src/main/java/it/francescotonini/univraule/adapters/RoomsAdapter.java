@@ -66,6 +66,9 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
     public void update(List<Room> rooms) {
         this.rooms = rooms;
         Collections.sort(this.rooms, ((o1, o2) -> o1.getName().compareTo(o2.getName())));
+        for (Room room: rooms) {
+            Collections.sort(room.getEvents(), ((e1, e2) -> (int)(e1.getStartTimestamp() - e2.getStartTimestamp())));
+        }
 
         this.notifyDataSetChanged();
     }
@@ -158,8 +161,8 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
             if (nowEvent != null) {
                 binding.itemRoomTimeDescriptionText.setText(R.string.item_room_available_from);
                 binding.itemRoomEtaDescriptionText.setText(R.string.item_room_busy_for);
-                binding.itemRoomTimeText.setText(DateToStringFormatter.getTimeString(nowEvent.getEndTimestamp()));
-                binding.itemRoomEtaText.setText(DateToStringFormatter.getETAString(nowEvent.getEndTimestamp()));
+                binding.itemRoomTimeText.setText(DateToStringFormatter.getTimeString(getCurrentEndTimestamp(this.room, nowEvent)));
+                binding.itemRoomEtaText.setText(DateToStringFormatter.getETAString(getCurrentEndTimestamp(this.room, nowEvent)));
 
                 binding.itemRoomTopRelativelayout.setBackgroundResource(R.color.dark_red);
                 binding.itemRoomBottomLinearlayout.setBackgroundResource(R.color.red);
@@ -182,6 +185,31 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
         private ItemRoomBinding binding;
     }
 
+    private long getCurrentEndTimestamp(Room room, Event from) {
+        Event next = null;
+        for (Event possibleNextEvent: room.getEvents()) {
+            if (possibleNextEvent.getStartTimestamp() > from.getStartTimestamp()) {
+                next = possibleNextEvent;
+            }
+        }
+
+        if (next == null) {
+            return from.getEndTimestamp();
+        }
+
+        Calendar nextCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
+        nextCalendar.setTimeInMillis(next.getStartTimestamp());
+        Calendar fromCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
+        fromCalendar.setTimeInMillis(from.getEndTimestamp());
+
+        if (nextCalendar.get(Calendar.HOUR_OF_DAY) != fromCalendar.get(Calendar.HOUR_OF_DAY) ||
+                nextCalendar.get(Calendar.MINUTE) != fromCalendar.get(Calendar.MINUTE)) {
+            return from.getEndTimestamp();
+        }
+        else {
+            return getCurrentEndTimestamp(room, next);
+        }
+    }
 
     private Calendar getClosingCalendar() {
         Calendar closingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
@@ -199,11 +227,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
         return openingCalendar;
     }
 
-    /**
-     * Gets the next {@link Event}
-     * @return the next {@link Event}
-     */
-    public Event getNextEvent(Room room) {
+    private Event getNextEvent(Room room) {
         Date now = new Date();
         for (Event e : room.getEvents()) {
             Date startTime = new Date(e.getStartTimestamp());
@@ -213,22 +237,14 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
             }
         }
 
-        Calendar closingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
-        closingCalendar.set(Calendar.HOUR_OF_DAY, 19);
-        closingCalendar.set(Calendar.MINUTE, 30);
-
-        if (now.before(closingCalendar.getTime())) {
+        if (now.before(getClosingCalendar().getTime())) {
             return getCloseEvent();
         }
 
         return null;
     }
 
-    /**
-     * Gets the current {@link Event} inside a {@link Room}
-     * @return the current {@link Event} inside a {@link Room}
-     */
-    public Event getCurrentEvent(Room room) {
+    private Event getCurrentEvent(Room room) {
         Date now = new Date();
 
         // Are you using the app after the uni closed?
@@ -251,10 +267,6 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
             Date endTime = new Date(e.getEndTimestamp());
 
             if (startTime.before(now) && endTime.after(now)) {
-                // Find first event that has a free spot
-
-
-
                 return e;
             }
         }
@@ -262,21 +274,12 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
         return null;
     }
 
-    /**
-     * Gets the event between closing time and opening time of this room
-     * @return "room close" event
-     */
-    public Event getCloseEvent() {
+    private Event getCloseEvent() {
         Event event = new Event();
         event.setName("Aula chiusa."); // TODO: replace
 
-        Calendar closingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
-        closingCalendar.set(Calendar.HOUR_OF_DAY, 19);
-        closingCalendar.set(Calendar.MINUTE, 30);
-
-        Calendar openingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
-        openingCalendar.set(Calendar.HOUR_OF_DAY, 7);
-        openingCalendar.set(Calendar.MINUTE, 30);
+        Calendar closingCalendar = getClosingCalendar();
+        Calendar openingCalendar = getOpeningCalendar();
         openingCalendar.set(Calendar.DAY_OF_MONTH, openingCalendar.get(Calendar.DAY_OF_MONTH) + 1);
 
         event.setStartTimestamp(closingCalendar.getTimeInMillis() / 1000L);
