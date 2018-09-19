@@ -32,13 +32,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import it.francescotonini.univraule.Logger;
 import it.francescotonini.univraule.R;
 import it.francescotonini.univraule.databinding.ItemRoomBinding;
 import it.francescotonini.univraule.helpers.DateToStringFormatter;
+import it.francescotonini.univraule.models.Event;
 import it.francescotonini.univraule.models.Room;
 
 /**
@@ -148,8 +152,8 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
             binding.itemRoomText.setText(this.room.getName());
             binding.itemRoomOfficeText.setText(this.room.getOfficeName());
 
-            Room.Event nowEvent = this.room.getCurrentEvent();
-            Room.Event nextEvent = this.room.getNextEvent();
+            Event nowEvent = getCurrentEvent(this.room);
+            Event nextEvent = getNextEvent(this.room);
 
             if (nowEvent != null) {
                 binding.itemRoomTimeDescriptionText.setText(R.string.item_room_available_from);
@@ -176,6 +180,109 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
 
         private Room room;
         private ItemRoomBinding binding;
+    }
+
+
+    private Calendar getClosingCalendar() {
+        Calendar closingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
+        closingCalendar.set(Calendar.HOUR_OF_DAY, 19);
+        closingCalendar.set(Calendar.MINUTE, 30);
+
+        return closingCalendar;
+    }
+
+    private Calendar getOpeningCalendar() {
+        Calendar openingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
+        openingCalendar.set(Calendar.HOUR_OF_DAY, 7);
+        openingCalendar.set(Calendar.MINUTE, 30);
+
+        return openingCalendar;
+    }
+
+    /**
+     * Gets the next {@link Event}
+     * @return the next {@link Event}
+     */
+    public Event getNextEvent(Room room) {
+        Date now = new Date();
+        for (Event e : room.getEvents()) {
+            Date startTime = new Date(e.getStartTimestamp());
+
+            if (startTime.after(now)) {
+                return e;
+            }
+        }
+
+        Calendar closingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
+        closingCalendar.set(Calendar.HOUR_OF_DAY, 19);
+        closingCalendar.set(Calendar.MINUTE, 30);
+
+        if (now.before(closingCalendar.getTime())) {
+            return getCloseEvent();
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets the current {@link Event} inside a {@link Room}
+     * @return the current {@link Event} inside a {@link Room}
+     */
+    public Event getCurrentEvent(Room room) {
+        Date now = new Date();
+
+        // Are you using the app after the uni closed?
+        if (now.after(getClosingCalendar().getTime())) {
+            return getCloseEvent();
+        }
+
+        // Are you here before opening time?
+        if (now.before(getOpeningCalendar().getTime())) {
+            Event e = new Event();
+            e.setStartTimestamp(now.getTime() / 1000L);
+            e.setEndTimestamp(getOpeningCalendar().getTime().getTime() / 1000L);
+
+            return e;
+        }
+
+        // Check for events
+        for (Event e : room.getEvents()) {
+            Date startTime = new Date(e.getStartTimestamp());
+            Date endTime = new Date(e.getEndTimestamp());
+
+            if (startTime.before(now) && endTime.after(now)) {
+                // Find first event that has a free spot
+
+
+
+                return e;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets the event between closing time and opening time of this room
+     * @return "room close" event
+     */
+    public Event getCloseEvent() {
+        Event event = new Event();
+        event.setName("Aula chiusa."); // TODO: replace
+
+        Calendar closingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
+        closingCalendar.set(Calendar.HOUR_OF_DAY, 19);
+        closingCalendar.set(Calendar.MINUTE, 30);
+
+        Calendar openingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
+        openingCalendar.set(Calendar.HOUR_OF_DAY, 7);
+        openingCalendar.set(Calendar.MINUTE, 30);
+        openingCalendar.set(Calendar.DAY_OF_MONTH, openingCalendar.get(Calendar.DAY_OF_MONTH) + 1);
+
+        event.setStartTimestamp(closingCalendar.getTimeInMillis() / 1000L);
+        event.setEndTimestamp(openingCalendar.getTimeInMillis() / 1000L);
+
+        return event;
     }
 
     private OnItemClickListener listener;

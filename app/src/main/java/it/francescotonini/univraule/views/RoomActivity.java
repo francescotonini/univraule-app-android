@@ -28,7 +28,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-
 import com.alamkanak.weekview.MonthLoader.MonthChangeListener;
 import com.alamkanak.weekview.WeekViewEvent;
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ import java.util.List;
 import java.util.TimeZone;
 import it.francescotonini.univraule.R;
 import it.francescotonini.univraule.databinding.ActivityRoomBinding;
-import it.francescotonini.univraule.models.Room;
+import it.francescotonini.univraule.models.Event;
 import it.francescotonini.univraule.viewmodels.RoomViewModel;
 
 public class RoomActivity extends BaseActivity implements MonthChangeListener {
@@ -104,7 +103,7 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
         }
 
         List<WeekViewEvent> result = new ArrayList<>();
-        for (Room.Event e : events) {
+        for (Event e : events) {
             Calendar start = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
             start.setTimeInMillis(e.getStartTimestamp());
 
@@ -120,7 +119,7 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
 
     private String officeName;
     private String roomName;
-    private List<Room.Event> events;
+    private List<Event> events;
     private RoomViewModel viewModel;
     private ActivityRoomBinding binding;
 }

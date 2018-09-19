@@ -46,64 +46,6 @@ import it.francescotonini.univraule.database.EventTypeConverter;
 @Entity
 @TypeConverters(EventTypeConverter.class)
 public class Room implements Comparator<Room> {
-    @Entity
-    public class Event {
-        /**
-         * Gets the name of the event
-         * @return name of the event
-         */
-        public String getName() {
-            return name;
-        }
-
-        /**
-         * Sets the name of the event
-         * @param name name of the event
-         */
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        /**
-         * Gets the start timestamp of the event
-         * @return start timestamp of the event
-         */
-        public long getStartTimestamp() {
-            return startTimestamp * 1000;
-        }
-
-        /**
-         * Sets the start timestamp of the event
-         * @param startTimestamp start timestamp of the event
-         */
-        public void setStartTimestamp(long startTimestamp) {
-            this.startTimestamp = startTimestamp;
-        }
-
-        /**
-         * Gets the end timestamp of the event
-         * @return end timestamp of the event
-         */
-        public long getEndTimestamp() {
-            return endTimestamp * 1000;
-        }
-
-        /**
-         * Sets the end timestamp of the event
-         * @param endTimestamp end timestamp of the event
-         */
-        public void setEndTimestamp(long endTimestamp) {
-            this.endTimestamp = endTimestamp;
-        }
-
-        @ColumnInfo(name = "event_name")
-        private String name;
-        @ColumnInfo(name = "event_start_timestamp")
-        private long startTimestamp;
-        @ColumnInfo(name = "event_end_timestamp")
-        private long endTimestamp;
-    }
-
     /**
      * Gets the name of the room
      * @return room name
@@ -137,81 +79,6 @@ public class Room implements Comparator<Room> {
     }
 
     /**
-     * Gets the current {@link Room.Event}
-     * @return the current {@link Room.Event}
-     */
-    public Room.Event getCurrentEvent() {
-        Date now = new Date();
-
-        // Are you using the app after the uni closed?
-        if (now.after(getClosingCalendar().getTime())) {
-            return getCloseEvent();
-        }
-
-        // Are you here before opening time?
-        if (now.before(getOpeningCalendar().getTime())) {
-            Event e = new Room.Event();
-            e.setStartTimestamp(now.getTime() / 1000L);
-            e.setEndTimestamp(getOpeningCalendar().getTime().getTime() / 1000L);
-
-            return e;
-        }
-
-        // Check for events
-        for (Room.Event e : getEvents()) {
-            Date startTime = new Date(e.getStartTimestamp());
-            Date endTime = new Date(e.getEndTimestamp());
-
-            if (startTime.before(now) && endTime.after(now)) {
-                return e;
-            }
-        }
-
-        return null;
-    }
-
-    private Calendar getClosingCalendar() {
-        Calendar closingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
-        closingCalendar.set(Calendar.HOUR_OF_DAY, 19);
-        closingCalendar.set(Calendar.MINUTE, 30);
-
-        return closingCalendar;
-    }
-
-    private Calendar getOpeningCalendar() {
-        Calendar openingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
-        openingCalendar.set(Calendar.HOUR_OF_DAY, 7);
-        openingCalendar.set(Calendar.MINUTE, 30);
-
-        return openingCalendar;
-    }
-
-    /**
-     * Gets the next {@link Room.Event}
-     * @return the next {@link Room.Event}
-     */
-    public Room.Event getNextEvent() {
-        Date now = new Date();
-        for (Room.Event e : getEvents()) {
-            Date startTime = new Date(e.getStartTimestamp());
-
-            if (startTime.after(now)) {
-                return e;
-            }
-        }
-
-        Calendar closingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
-        closingCalendar.set(Calendar.HOUR_OF_DAY, 19);
-        closingCalendar.set(Calendar.MINUTE, 30);
-
-        if (now.before(closingCalendar.getTime())) {
-            return getCloseEvent();
-        }
-
-        return null;
-    }
-
-    /**
      * Gets the name of the {@link Office} associated with this room
      * @return name of the {@link Office}
      */
@@ -241,29 +108,6 @@ public class Room implements Comparator<Room> {
      */
     public void setId(@NonNull int id) {
         this.id = id;
-    }
-
-    /**
-     * Gets the event between closing time and opening time of this room
-     * @return "room close" event
-     */
-    public Room.Event getCloseEvent() {
-        Event event = new Event();
-        event.name = "Aula chiusa."; // TODO: replace
-
-        Calendar closingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
-        closingCalendar.set(Calendar.HOUR_OF_DAY, 19);
-        closingCalendar.set(Calendar.MINUTE, 30);
-
-        Calendar openingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
-        openingCalendar.set(Calendar.HOUR_OF_DAY, 7);
-        openingCalendar.set(Calendar.MINUTE, 30);
-        openingCalendar.set(Calendar.DAY_OF_MONTH, openingCalendar.get(Calendar.DAY_OF_MONTH) + 1);
-
-        event.setStartTimestamp(closingCalendar.getTimeInMillis() / 1000L);
-        event.setEndTimestamp(openingCalendar.getTimeInMillis() / 1000L);
-
-        return event;
     }
 
     @Override public int compare(Room o1, Room o2) {

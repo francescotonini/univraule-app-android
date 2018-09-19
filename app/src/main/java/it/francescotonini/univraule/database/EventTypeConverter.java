@@ -31,6 +31,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.List;
+
+import it.francescotonini.univraule.models.Event;
 import it.francescotonini.univraule.models.Room;
 
 /**
@@ -38,17 +40,17 @@ import it.francescotonini.univraule.models.Room;
  */
 public class EventTypeConverter {
     @TypeConverter
-    public static List<Room.Event> stringToEvent(String json) {
+    public static List<Event> stringToEvent(String json) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Room.Event>>() {}.getType();
-        List<Room.Event> events = gson.fromJson(json, type);
+        Type type = new TypeToken<List<Event>>() {}.getType();
+        List<Event> events = gson.fromJson(json, type);
         return events;
     }
 
     @TypeConverter
-    public static String eventsToString(List<Room.Event> list) {
+    public static String eventsToString(List<Event> list) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Room.Event>>() {}.getType();
+        Type type = new TypeToken<List<Event>>() {}.getType();
         String json = gson.toJson(list, type);
         return json;
     }
