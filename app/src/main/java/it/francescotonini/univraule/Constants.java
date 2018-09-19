@@ -25,5 +25,5 @@
 package it.francescotonini.univraule;
 
 public class Constants {
-    public static final String BASE_URL = "YOUR_BASE_URL";
+    public static final String BASE_URL = "https://univrorari.francescotonini.me/v1/";
 }

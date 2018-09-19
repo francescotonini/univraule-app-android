@@ -24,10 +24,7 @@
 
 package it.francescotonini.univraule;
 
-import android.os.Bundle;
 import android.util.Log;
-
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 /**
  * Android Log wrapper class that can use {@link String#format(String, Object...)} in logging message
@@ -125,10 +122,6 @@ public class Logger {
      * @return
      */
     public static int e(String tag, String msg) {
-        Bundle params = new Bundle();
-        params.putString("detail", tag + ": " + msg);
-        firebaseAnalytics.logEvent("caught_error", params);
-
         return Log.e(tag, msg);
     }
 
@@ -142,6 +135,4 @@ public class Logger {
     public static int e(String tag, String msg, Throwable e) {
         return Log.e(tag, msg, e);
     }
-
-    private static FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(App.getContext());
 }

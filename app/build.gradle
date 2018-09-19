@@ -39,12 +39,6 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            resValue("bool", "FIREBASE_CRASH_ENABLED", "true")
-            resValue("bool", "firebase_analytics_collection_enabled", "true")
-        }
-        debug {
-            resValue("bool", "FIREBASE_CRASH_ENABLED", "false")
-            resValue("bool", "firebase_analytics_collection_enabled", "false")
         }
     }
     dataBinding.enabled = true
@@ -59,10 +53,6 @@ dependencies {
 
     // Week view
     implementation 'com.github.alamkanak:android-week-view:1.2.6'
-
-    // Firebase + Crashlytics
-    implementation 'com.google.firebase:firebase-core:12.0.1'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.1'
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
@@ -96,6 +86,3 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
-
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'io.fabric'
