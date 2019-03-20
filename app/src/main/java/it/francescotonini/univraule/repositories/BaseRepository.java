@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2018 Francesco Tonini <francescoantoniotonini@gmail.com>
+ * Copyright (c) 2018-2019 Francesco Tonini <francescoantoniotonini@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,11 @@
 
 package it.francescotonini.univraule.repositories;
 
-import android.arch.persistence.room.Room;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+import androidx.room.Room;
+import androidx.room.migration.Migration;
+import androidx.annotation.NonNull;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import it.francescotonini.univraule.App;
@@ -50,10 +54,16 @@ public class BaseRepository {
         database = Room.databaseBuilder(App.getContext(),
                 UniVRDatabase.class,
                 "univrauledb")
+                .addMigrations(new Migration(1, 2) {
+                    @Override
+                    public void migrate(@NonNull SupportSQLiteDatabase database) {
+                        database.execSQL("DELETE FROM room");
+                    }
+                })
                 .build();
 
         // Init api
-        api= new Retrofit.Builder()
+        api = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

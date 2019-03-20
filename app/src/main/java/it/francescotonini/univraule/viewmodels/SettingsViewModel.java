@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2018 Francesco Tonini <francescoantoniotonini@gmail.com>
+ * Copyright (c) 2018-2019 Francesco Tonini <francescoantoniotonini@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,8 @@
  */
 
 package it.francescotonini.univraule.viewmodels;
+
+import com.pixplicity.easyprefs.library.Prefs;
 
 import it.francescotonini.univraule.Logger;
 import it.francescotonini.univraule.models.Room;
@@ -47,6 +49,22 @@ public class SettingsViewModel extends BaseViewModel {
      */
     public void clearDB() {
         repository.clearAll();
+    }
+
+    /**
+     * Sets the ui theme for this app
+     * @param value
+     */
+    public void setUITheme(int value) {
+        Prefs.putInt("theme", value);
+    }
+
+    /**
+     * Gets a boolean indicating whether or not dark theme is active
+     * @return TRUE if dark mode is active; otherwise FALSE
+     */
+    public int getUITheme() {
+        return Prefs.getInt("theme", getOwner().getResources().getConfiguration().uiMode);
     }
 
     private RoomsRepository repository;

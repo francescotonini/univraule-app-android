@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2018 Francesco Tonini <francescoantoniotonini@gmail.com>
+ * Copyright (c) 2018-2019 Francesco Tonini <francescoantoniotonini@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,31 +24,32 @@
 
 package it.francescotonini.univraule.database;
 
-import android.arch.persistence.room.TypeConverter;
+import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.List;
-import it.francescotonini.univraule.models.Room;
+
+import it.francescotonini.univraule.models.Event;
 
 /**
  * Converts a list of event to gson
  */
 public class EventTypeConverter {
     @TypeConverter
-    public static List<Room.Event> stringToEvent(String json) {
+    public static List<Event> stringToEvent(String json) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Room.Event>>() {}.getType();
-        List<Room.Event> events = gson.fromJson(json, type);
+        Type type = new TypeToken<List<Event>>() {}.getType();
+        List<Event> events = gson.fromJson(json, type);
         return events;
     }
 
     @TypeConverter
-    public static String eventsToString(List<Room.Event> list) {
+    public static String eventsToString(List<Event> list) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Room.Event>>() {}.getType();
+        Type type = new TypeToken<List<Event>>() {}.getType();
         String json = gson.toJson(list, type);
         return json;
     }

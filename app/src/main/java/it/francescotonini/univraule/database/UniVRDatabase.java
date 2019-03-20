@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2018 Francesco Tonini <francescoantoniotonini@gmail.com>
+ * Copyright (c) 2018-2019 Francesco Tonini <francescoantoniotonini@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,8 @@
 
 package it.francescotonini.univraule.database;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
+import androidx.room.Database;
+import androidx.room.RoomDatabase;
 import it.francescotonini.univraule.database.dao.OfficeDao;
 import it.francescotonini.univraule.database.dao.RoomDao;
 import it.francescotonini.univraule.models.Office;
@@ -34,7 +34,7 @@ import it.francescotonini.univraule.models.Room;
 /**
  * Database structure
  */
-@Database(entities = { Office.class, Room.class }, version = 1)
+@Database(entities = { Office.class, Room.class }, version = 2, exportSchema = false)
 public abstract class UniVRDatabase extends RoomDatabase {
     public abstract OfficeDao officeDao();
     public abstract RoomDao roomDao();

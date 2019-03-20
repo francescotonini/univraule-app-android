@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2018 Francesco Tonini <francescoantoniotonini@gmail.com>
+ * Copyright (c) 2018-2019 Francesco Tonini <francescoantoniotonini@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,16 +29,20 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceFragmentCompat;
+
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreference;
 import it.francescotonini.univraule.App;
 import it.francescotonini.univraule.R;
+import it.francescotonini.univraule.helpers.AlertDialogHelper;
 import it.francescotonini.univraule.helpers.SnackBarHelper;
 import it.francescotonini.univraule.viewmodels.SettingsViewModel;
 
 @SuppressLint("ValidFragment")
 public class SettingsFragment extends PreferenceFragmentCompat
-    implements Preference.OnPreferenceClickListener {
+    implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
     @SuppressLint("ValidFragment") public SettingsFragment(SettingsViewModel viewModel) {
         this.viewModel = viewModel;
     }
@@ -49,6 +53,14 @@ public class SettingsFragment extends PreferenceFragmentCompat
         cleardDb = findPreference("clear_db");
         leaveFeedback = findPreference("leave_feedback");
         appVersion = findPreference("app_version");
+        darkTheme = (SwitchPreference)findPreference("dark_theme");
+
+        int currentNightMode = viewModel.getUITheme();
+        darkTheme.setDefaultValue(currentNightMode == AppCompatDelegate.MODE_NIGHT_YES);
+
+        if (currentNightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+            darkTheme.setSummary(R.string.preferences_force_dark_theme_true);
+        }
     }
 
     @Override public void onCreatePreferences(Bundle bundle, String s) {
@@ -59,6 +71,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
         super.onResume();
 
         cleardDb.setOnPreferenceClickListener(this);
+        darkTheme.setOnPreferenceChangeListener(this);
         leaveFeedback.setOnPreferenceClickListener(this);
         try {
             appVersion.setSummary(App.getContext().getPackageManager().getPackageInfo(App.getContext().getPackageName(), 0).versionName);
@@ -81,7 +94,29 @@ public class SettingsFragment extends PreferenceFragmentCompat
         return true;
     }
 
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if ((Boolean) newValue) {
+            viewModel.setUITheme(AppCompatDelegate.MODE_NIGHT_YES);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+            darkTheme.setSummary(R.string.preferences_force_dark_theme_true);
+        }
+        else {
+            viewModel.setUITheme(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+
+            darkTheme.setSummary(R.string.preferences_force_dark_theme_false);
+        }
+
+        // Show popup
+        AlertDialogHelper.show(getContext(), R.string.info, R.string.preferences_force_dark_theme_message, R.string.ok);
+
+        return true;
+    }
+
     private SettingsViewModel viewModel;
+    private SwitchPreference darkTheme;
     private Preference cleardDb;
     private Preference leaveFeedback;
     private Preference appVersion;

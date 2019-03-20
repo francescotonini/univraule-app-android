@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2018 Francesco Tonini <francescoantoniotonini@gmail.com>
+ * Copyright (c) 2018-2019 Francesco Tonini <francescoantoniotonini@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +24,10 @@
 
 package it.francescotonini.univraule.viewmodels;
 
-import android.arch.lifecycle.MutableLiveData;
+import androidx.lifecycle.MutableLiveData;
 import java.util.List;
-import it.francescotonini.univraule.models.Room;
+
+import it.francescotonini.univraule.models.Event;
 import it.francescotonini.univraule.repositories.RoomsRepository;
 import it.francescotonini.univraule.views.BaseActivity;
 
@@ -44,12 +45,12 @@ public class RoomViewModel extends BaseViewModel {
     }
 
     /**
-     * Gets a mutable list of {@link it.francescotonini.univraule.models.Room.Event}
+     * Gets a mutable list of {@link it.francescotonini.univraule.models.Event}
      * @param roomName room name
      * @param officeName office name
-     * @return a mutable list of {@link it.francescotonini.univraule.models.Room.Event}
+     * @return a mutable list of {@link it.francescotonini.univraule.models.Event}
      */
-    public MutableLiveData<List<Room.Event>> getEvents(String roomName, String officeName) {
+    public MutableLiveData<List<Event>> getEvents(String roomName, String officeName) {
         loadEvents(roomName, officeName);
         return events;
     }
@@ -66,5 +67,5 @@ public class RoomViewModel extends BaseViewModel {
     }
 
     private RoomsRepository repository;
-    private MutableLiveData<List<Room.Event>> events;
+    private MutableLiveData<List<Event>> events;
 }

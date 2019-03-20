@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2018 Francesco Tonini <francescoantoniotonini@gmail.com>
+ * Copyright (c) 2018-2019 Francesco Tonini <francescoantoniotonini@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +24,10 @@
 
 package it.francescotonini.univraule.views;
 
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
-
 import com.alamkanak.weekview.MonthLoader.MonthChangeListener;
 import com.alamkanak.weekview.WeekViewEvent;
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ import java.util.List;
 import java.util.TimeZone;
 import it.francescotonini.univraule.R;
 import it.francescotonini.univraule.databinding.ActivityRoomBinding;
-import it.francescotonini.univraule.models.Room;
+import it.francescotonini.univraule.models.Event;
 import it.francescotonini.univraule.viewmodels.RoomViewModel;
 
 public class RoomActivity extends BaseActivity implements MonthChangeListener {
@@ -69,7 +68,7 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
         officeName = getIntent().getStringExtra("officeName");
         roomName = getIntent().getStringExtra("roomName");
 
-        getSupportActionBar().setTitle(roomName);
+        getSupportActionBar().setTitle(getTitle() + " " + roomName);
         binding.activityRoomWeekView.setMonthChangeListener(this);
         binding.activityRoomWeekView.goToHour(7);
     }
@@ -104,7 +103,7 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
         }
 
         List<WeekViewEvent> result = new ArrayList<>();
-        for (Room.Event e : events) {
+        for (Event e : events) {
             Calendar start = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
             start.setTimeInMillis(e.getStartTimestamp());
 
@@ -112,7 +111,9 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
             end.setTimeInMillis(e.getEndTimestamp());
             end.set(Calendar.MINUTE, end.get(Calendar.MINUTE) - 1);
 
-            result.add(new WeekViewEvent(e.getName().hashCode(), e.getName(), "", start, end));
+            WeekViewEvent event = new WeekViewEvent(e.getName().hashCode(), e.getName(), "", start, end);
+            event.setColor(getResources().getColor(R.color.accent));
+            result.add(event);
         }
 
         return result;
@@ -120,7 +121,7 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
 
     private String officeName;
     private String roomName;
-    private List<Room.Event> events;
+    private List<Event> events;
     private RoomViewModel viewModel;
     private ActivityRoomBinding binding;
 }

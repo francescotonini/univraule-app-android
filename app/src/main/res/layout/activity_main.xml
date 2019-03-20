@@ -2,7 +2,7 @@
 <!--
   ~ The MIT License (MIT)
   ~
-  ~ Copyright (c) 2018 Francesco Tonini <francescoantoniotonini@gmail.com>
+  ~ Copyright (c) 2018-2019 Francesco Tonini <francescoantoniotonini@gmail.com>
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -34,20 +34,20 @@
             android:id="@+id/toolbar"
             layout="@layout/toolbar" />
         <!-- Main content -->
-        <android.support.v4.widget.SwipeRefreshLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/activity_main_refreshlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/toolbar">
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/activity_main_recycler_view"
                 android:scrollbars="none"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingBottom="@dimen/spacing_extra_extra_medium"
+                android:paddingBottom="@dimen/spacing_twelve"
                 app:layoutManager="LinearLayoutManager"/>
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <!-- General message -->
         <TextView
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:padding="@dimen/spacing_large"
+            android:padding="@dimen/spacing_sixteen"
             android:textAlignment="center"
             android:visibility="gone"
             tools:text=":)"

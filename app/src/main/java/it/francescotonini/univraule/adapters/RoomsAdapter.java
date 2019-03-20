@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2018 Francesco Tonini <francescoantoniotonini@gmail.com>
+ * Copyright (c) 2018-2019 Francesco Tonini <francescoantoniotonini@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +24,9 @@
 
 package it.francescotonini.univraule.adapters;
 
-import android.databinding.DataBindingUtil;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.databinding.DataBindingUtil;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import it.francescotonini.univraule.Logger;
 import it.francescotonini.univraule.R;
 import it.francescotonini.univraule.databinding.ItemRoomBinding;
 import it.francescotonini.univraule.helpers.DateToStringFormatter;
@@ -62,6 +61,9 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
     public void update(List<Room> rooms) {
         this.rooms = rooms;
         Collections.sort(this.rooms, ((o1, o2) -> o1.getName().compareTo(o2.getName())));
+        for (Room room: rooms) {
+            Collections.sort(room.getEvents(), ((e1, e2) -> (int)(e1.getStartTimestamp() - e2.getStartTimestamp())));
+        }
 
         this.notifyDataSetChanged();
     }
@@ -148,29 +150,13 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
             binding.itemRoomText.setText(this.room.getName());
             binding.itemRoomOfficeText.setText(this.room.getOfficeName());
 
-            Room.Event nowEvent = this.room.getCurrentEvent();
-            Room.Event nextEvent = this.room.getNextEvent();
-
-            if (nowEvent != null) {
-                binding.itemRoomTimeDescriptionText.setText(R.string.item_room_available_from);
-                binding.itemRoomEtaDescriptionText.setText(R.string.item_room_busy_for);
-                binding.itemRoomTimeText.setText(DateToStringFormatter.getTimeString(nowEvent.getEndTimestamp()));
-                binding.itemRoomEtaText.setText(DateToStringFormatter.getETAString(nowEvent.getEndTimestamp()));
-
-                binding.itemRoomTopRelativelayout.setBackgroundResource(R.color.dark_red);
-                binding.itemRoomBottomLinearlayout.setBackgroundResource(R.color.red);
-            }
-            else if (nextEvent != null) {
-                binding.itemRoomTimeDescriptionText.setText(R.string.item_room_busy_from);
-                binding.itemRoomEtaDescriptionText.setText(R.string.item_room_available_for);
-                binding.itemRoomTimeText.setText(DateToStringFormatter.getTimeString(nextEvent.getStartTimestamp()));
-                binding.itemRoomEtaText.setText(DateToStringFormatter.getETAString(nextEvent.getStartTimestamp()));
-
-                binding.itemRoomTopRelativelayout.setBackgroundResource(R.color.dark_green);
-                binding.itemRoomBottomLinearlayout.setBackgroundResource(R.color.green);
+            if (!room.isFree()) {
+                binding.itemRoomTimeText.setText(DateToStringFormatter.getTimeString(room.getUntil()));
+                binding.itemRoomTopRelativelayout.setBackgroundResource(R.color.red);
             }
             else {
-                Logger.e(RoomsAdapter.class.getSimpleName(), "Both nextEvent and nowEvent are null.");
+                binding.itemRoomTimeText.setText(DateToStringFormatter.getTimeString(room.getUntil()));
+                binding.itemRoomTopRelativelayout.setBackgroundResource(R.color.green);
             }
         }
 

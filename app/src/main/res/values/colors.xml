@@ -2,7 +2,7 @@
 <!--
   ~ The MIT License (MIT)
   ~
-  ~ Copyright (c) 2018 Francesco Tonini <francescoantoniotonini@gmail.com>
+  ~ Copyright (c) 2018-2019 Francesco Tonini <francescoantoniotonini@gmail.com>
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -24,17 +24,15 @@
   -->
 
 <resources>
-    <color name="primary_dark">#FFA726</color>
-    <color name="primary">#FFB74D</color>
-    <color name="accent">#29B6F6</color>
-    <color name="divider">#E6E6E6</color>
-    <color name="background">#F5F5F5</color>
-    <color name="primary_text">#212121</color>
-    <color name="secondary_text">#757575</color>
+    <color name="primary">#FFFFFF</color>
+    <color name="primary_dark">#FFFFFF</color>
+    <color name="accent">#002F6C</color>
+    <color name="accent_light">#10039be5</color>
+    <color name="background">#FFFFFF</color>
+    <color name="primary_text">#DE000000</color>
+    <color name="secondary_text">#8A000000</color>
+    <color name="divider">#1F000000</color>
 
-    <color name="green">#67AF83</color>
-    <color name="dark_green">#62A67D</color>
-    <color name="red">#DE7572</color>
-    <color name="dark_red">#DB635F</color>
-    <color name="white_70">#B3FFFFFF</color>
+    <color name="green">#43A047</color>
+    <color name="red">#F44336</color>
 </resources>

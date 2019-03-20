@@ -26,52 +26,64 @@ package it.francescotonini.univraule.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-import androidx.annotation.NonNull;
 
 /**
- * Represents an office (every office has one or more rooms)
+ * Represents an event inside a {@link Room}
  */
 @Entity
-public class Office implements Comparable<Office> {
+public class Event {
     /**
-     * Gets the name of the office
-     * @return gets name of the office
+     * Gets the name of the event
+     * @return name of the event
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Gets the id of the office
-     * @return the id of the office
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the name
-     * @param name name
+     * Sets the name of the event
+     * @param name name of the event
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Sets the id
-     * @param id id
+     * Gets the start timestamp of the event
+     * @return start timestamp of the event
      */
-    public void setId(String id) {
-        this.id = id;
+    public long getStartTimestamp() {
+        return startTimestamp * 1000;
     }
 
-    @Override public int compareTo(@NonNull Office o) {
-        return id.compareTo(o.id);
+    /**
+     * Sets the start timestamp of the event
+     * @param startTimestamp start timestamp of the event
+     */
+    public void setStartTimestamp(long startTimestamp) {
+        this.startTimestamp = startTimestamp;
     }
 
-    @ColumnInfo(name = "name")
+    /**
+     * Gets the end timestamp of the event
+     * @return end timestamp of the event
+     */
+    public long getEndTimestamp() {
+        return endTimestamp * 1000;
+    }
+
+    /**
+     * Sets the end timestamp of the event
+     * @param endTimestamp end timestamp of the event
+     */
+    public void setEndTimestamp(long endTimestamp) {
+        this.endTimestamp = endTimestamp;
+    }
+
+    @ColumnInfo(name = "event_name")
     private String name;
-    @PrimaryKey @NonNull @ColumnInfo(name = "id")
-    private String id;
+    @ColumnInfo(name = "event_start_timestamp")
+    private long startTimestamp;
+    @ColumnInfo(name = "event_end_timestamp")
+    private long endTimestamp;
 }

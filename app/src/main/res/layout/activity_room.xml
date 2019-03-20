@@ -2,7 +2,7 @@
 <!--
   ~ The MIT License (MIT)
   ~
-  ~ Copyright (c) 2018 Francesco Tonini <francescoantoniotonini@gmail.com>
+  ~ Copyright (c) 2018-2019 Francesco Tonini <francescoantoniotonini@gmail.com>
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -37,16 +37,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/toolbar"
-            android:layout_marginRight="@dimen/spacing_medium"
+            android:layout_marginRight="@dimen/spacing_eight"
             app:eventTextColor="@android:color/white"
             app:textSize="@dimen/secondary_text_size"
-            app:hourHeight="@dimen/spacing_extra_extra_huge"
-            app:columnGap="@dimen/spacing_medium"
+            app:hourHeight="@dimen/spacing_seventy"
+            app:columnGap="@dimen/spacing_eight"
             app:noOfVisibleDays="1"
             app:eventTextSize="@dimen/primary_text_size"
-            app:headerColumnPadding="@dimen/spacing_medium"
+            app:headerColumnPadding="@dimen/spacing_eight"
             app:headerColumnTextColor="@color/primary_text"
-            app:headerRowPadding="@dimen/spacing_extra_extra_medium"
+            app:headerRowPadding="@dimen/spacing_twelve"
             app:headerRowBackgroundColor="@android:color/transparent"
             app:todayBackgroundColor="@android:color/transparent"
             app:todayHeaderTextColor="@color/accent"

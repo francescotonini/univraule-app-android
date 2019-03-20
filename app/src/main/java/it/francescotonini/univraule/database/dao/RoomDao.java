@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2018 Francesco Tonini <francescoantoniotonini@gmail.com>
+ * Copyright (c) 2018-2019 Francesco Tonini <francescoantoniotonini@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,10 +24,10 @@
 
 package it.francescotonini.univraule.database.dao;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.Query;
+import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.Query;
 import java.util.List;
 import it.francescotonini.univraule.models.Room;
 
@@ -45,7 +45,7 @@ public interface RoomDao {
     @Query("DELETE FROM room WHERE office_name=:officeName")
     void deleteByOffice(String officeName);
 
-    @Query("SELECT DISTINCT id,name,office_name,events FROM room WHERE name=:roomName AND office_name=:officeName")
+    @Query("SELECT DISTINCT id,name,office_name,events,isFree,until FROM room WHERE name=:roomName AND office_name=:officeName")
     LiveData<Room> getRoom(String roomName, String officeName);
 
     @Query("DELETE FROM room")

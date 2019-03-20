@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2018 Francesco Tonini <francescoantoniotonini@gmail.com>
+ * Copyright (c) 2018-2019 Francesco Tonini <francescoantoniotonini@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,5 +25,5 @@
 package it.francescotonini.univraule;
 
 public class Constants {
-    public static final String BASE_URL = "YOUR_BASE_URL";
+    public static final String BASE_URL = "https://univrorari.francescotonini.me/v1/";
 }

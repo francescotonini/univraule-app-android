@@ -1,7 +1,7 @@
 <!--
   ~ The MIT License (MIT)
   ~
-  ~ Copyright (c) 2018 Francesco Tonini <francescoantoniotonini@gmail.com>
+  ~ Copyright (c) 2018-2019 Francesco Tonini <francescoantoniotonini@gmail.com>
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -22,32 +22,32 @@
   ~ SOFTWARE.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="app_theme_base" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="app_theme_base" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
     </style>
 
     <style name="app_theme" parent="app_theme_base">
-        <!--<item name="android:windowLightStatusBar">false</item>-->
-    </style>
-
-    <style name="app_theme_bootstrap_activity" parent="app_theme_base">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary</item>
-        <item name="android:navigationBarColor">@color/primary</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
         <item name="android:windowBackground">@color/primary</item>
     </style>
 
-    <style name="app_theme_toolbar" parent="app_theme">
-        <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="android:textColorSecondary">@android:color/white</item>
-        <item name="actionMenuTextColor">@android:color/black</item>
+    <style name="app_theme_bootstrap_activity" parent="app_theme_base">
+        <item name="colorPrimaryDark">@color/accent</item>
+        <item name="android:windowBackground">@color/accent</item>
     </style>
 
-    <style name="app_theme_settings" parent="app_theme_base">
+    <style name="app_theme_toolbar" parent="app_theme">
+        <item name="android:background">@color/primary</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/primary_text</item>
+        <item name="actionMenuTextColor">@color/primary_text</item>
+    </style>
+
+    <style name="app_theme_settings" parent="app_theme">
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
@@ -80,12 +80,6 @@
     <style name="cell_secondary_text_view" parent="android:Widget.TextView">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/cell_secondary_text_size</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
-    <style name="cell_tertiary_text_view" parent="android:Widget.TextView">
-        <item name="android:textColor">@color/white_70</item>
-        <item name="android:textSize">@dimen/cell_tertiary_text_size</item>
         <item name="android:textStyle">normal</item>
     </style>
 
