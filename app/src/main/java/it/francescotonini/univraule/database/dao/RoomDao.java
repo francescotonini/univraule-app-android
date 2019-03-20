@@ -45,7 +45,7 @@ public interface RoomDao {
     @Query("DELETE FROM room WHERE office_name=:officeName")
     void deleteByOffice(String officeName);
 
-    @Query("SELECT DISTINCT id,name,office_name,events FROM room WHERE name=:roomName AND office_name=:officeName")
+    @Query("SELECT DISTINCT id,name,office_name,events,isFree,until FROM room WHERE name=:roomName AND office_name=:officeName")
     LiveData<Room> getRoom(String roomName, String officeName);
 
     @Query("DELETE FROM room")

@@ -155,137 +155,28 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
             binding.itemRoomText.setText(this.room.getName());
             binding.itemRoomOfficeText.setText(this.room.getOfficeName());
 
-            Event nowEvent = getCurrentEvent(this.room);
-            Event nextEvent = getNextEvent(this.room);
-
-            if (nowEvent != null) {
+            if (!room.isFree()) {
                 binding.itemRoomTimeDescriptionText.setText(R.string.item_room_available_from);
                 binding.itemRoomEtaDescriptionText.setText(R.string.item_room_busy_for);
-                binding.itemRoomTimeText.setText(DateToStringFormatter.getTimeString(getCurrentEndTimestamp(this.room, nowEvent)));
-                binding.itemRoomEtaText.setText(DateToStringFormatter.getETAString(getCurrentEndTimestamp(this.room, nowEvent)));
+                binding.itemRoomTimeText.setText(DateToStringFormatter.getTimeString(room.getUntil()));
+                binding.itemRoomEtaText.setText(DateToStringFormatter.getETAString(room.getUntil()));
 
                 binding.itemRoomTopRelativelayout.setBackgroundResource(R.color.dark_red);
                 binding.itemRoomBottomLinearlayout.setBackgroundResource(R.color.red);
             }
-            else if (nextEvent != null) {
+            else {
                 binding.itemRoomTimeDescriptionText.setText(R.string.item_room_busy_from);
                 binding.itemRoomEtaDescriptionText.setText(R.string.item_room_available_for);
-                binding.itemRoomTimeText.setText(DateToStringFormatter.getTimeString(nextEvent.getStartTimestamp()));
-                binding.itemRoomEtaText.setText(DateToStringFormatter.getETAString(nextEvent.getStartTimestamp()));
+                binding.itemRoomTimeText.setText(DateToStringFormatter.getTimeString(room.getUntil()));
+                binding.itemRoomEtaText.setText(DateToStringFormatter.getETAString(room.getUntil()));
 
                 binding.itemRoomTopRelativelayout.setBackgroundResource(R.color.dark_green);
                 binding.itemRoomBottomLinearlayout.setBackgroundResource(R.color.green);
-            }
-            else {
-                Logger.e(RoomsAdapter.class.getSimpleName(), "Both nextEvent and nowEvent are null.");
             }
         }
 
         private Room room;
         private ItemRoomBinding binding;
-    }
-
-    private long getCurrentEndTimestamp(Room room, Event from) {
-        Event next = null;
-        for (Event possibleNextEvent: room.getEvents()) {
-            if (possibleNextEvent.getStartTimestamp() > from.getStartTimestamp()) {
-                next = possibleNextEvent;
-            }
-        }
-
-        if (next == null) {
-            return from.getEndTimestamp();
-        }
-
-        Calendar nextCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
-        nextCalendar.setTimeInMillis(next.getStartTimestamp());
-        Calendar fromCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
-        fromCalendar.setTimeInMillis(from.getEndTimestamp());
-
-        if (nextCalendar.get(Calendar.HOUR_OF_DAY) != fromCalendar.get(Calendar.HOUR_OF_DAY) ||
-                nextCalendar.get(Calendar.MINUTE) != fromCalendar.get(Calendar.MINUTE)) {
-            return from.getEndTimestamp();
-        }
-        else {
-            return getCurrentEndTimestamp(room, next);
-        }
-    }
-
-    private Calendar getClosingCalendar() {
-        Calendar closingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
-        closingCalendar.set(Calendar.HOUR_OF_DAY, 19);
-        closingCalendar.set(Calendar.MINUTE, 30);
-
-        return closingCalendar;
-    }
-
-    private Calendar getOpeningCalendar() {
-        Calendar openingCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
-        openingCalendar.set(Calendar.HOUR_OF_DAY, 7);
-        openingCalendar.set(Calendar.MINUTE, 30);
-
-        return openingCalendar;
-    }
-
-    private Event getNextEvent(Room room) {
-        Date now = new Date();
-        for (Event e : room.getEvents()) {
-            Date startTime = new Date(e.getStartTimestamp());
-
-            if (startTime.after(now)) {
-                return e;
-            }
-        }
-
-        if (now.before(getClosingCalendar().getTime())) {
-            return getCloseEvent();
-        }
-
-        return null;
-    }
-
-    private Event getCurrentEvent(Room room) {
-        Date now = new Date();
-
-        // Are you using the app after the uni closed?
-        if (now.after(getClosingCalendar().getTime())) {
-            return getCloseEvent();
-        }
-
-        // Are you here before opening time?
-        if (now.before(getOpeningCalendar().getTime())) {
-            Event e = new Event();
-            e.setStartTimestamp(now.getTime() / 1000L);
-            e.setEndTimestamp(getOpeningCalendar().getTime().getTime() / 1000L);
-
-            return e;
-        }
-
-        // Check for events
-        for (Event e : room.getEvents()) {
-            Date startTime = new Date(e.getStartTimestamp());
-            Date endTime = new Date(e.getEndTimestamp());
-
-            if (startTime.before(now) && endTime.after(now)) {
-                return e;
-            }
-        }
-
-        return null;
-    }
-
-    private Event getCloseEvent() {
-        Event event = new Event();
-        event.setName("Aula chiusa."); // TODO: replace
-
-        Calendar closingCalendar = getClosingCalendar();
-        Calendar openingCalendar = getOpeningCalendar();
-        openingCalendar.set(Calendar.DAY_OF_MONTH, openingCalendar.get(Calendar.DAY_OF_MONTH) + 1);
-
-        event.setStartTimestamp(closingCalendar.getTimeInMillis() / 1000L);
-        event.setEndTimestamp(openingCalendar.getTimeInMillis() / 1000L);
-
-        return event;
     }
 
     private OnItemClickListener listener;

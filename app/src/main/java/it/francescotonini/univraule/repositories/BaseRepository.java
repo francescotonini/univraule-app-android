@@ -24,7 +24,11 @@
 
 package it.francescotonini.univraule.repositories;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
+import android.arch.persistence.room.migration.Migration;
+import android.support.annotation.NonNull;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import it.francescotonini.univraule.App;
@@ -50,6 +54,12 @@ public class BaseRepository {
         database = Room.databaseBuilder(App.getContext(),
                 UniVRDatabase.class,
                 "univrauledb")
+                .addMigrations(new Migration(1, 2) {
+                    @Override
+                    public void migrate(@NonNull SupportSQLiteDatabase database) {
+                        database.execSQL("DELETE FROM room");
+                    }
+                })
                 .build();
 
         // Init api

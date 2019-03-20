@@ -34,7 +34,7 @@ import it.francescotonini.univraule.models.Room;
 /**
  * Database structure
  */
-@Database(entities = { Office.class, Room.class }, version = 1)
+@Database(entities = { Office.class, Room.class }, version = 2, exportSchema = false)
 public abstract class UniVRDatabase extends RoomDatabase {
     public abstract OfficeDao officeDao();
     public abstract RoomDao roomDao();

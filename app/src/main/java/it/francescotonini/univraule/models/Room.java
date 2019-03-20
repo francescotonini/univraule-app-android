@@ -110,6 +110,38 @@ public class Room implements Comparator<Room> {
         this.id = id;
     }
 
+    /**
+     * Gets a boolean indicating whether or not this room is available or not
+     * @return if TRUE this room is available; otherwise not
+     */
+    public boolean isFree() {
+        return isFree;
+    }
+
+    /**
+     * Sets a boolean indicating whether or not this room is available or not
+     * @param free if TRUE this room is available; otherwise not
+     */
+    public void setFree(boolean free) {
+        isFree = free;
+    }
+
+    /**
+     * Gets the timestamp when the room gets available or not
+     * @return the timestamp when the room gets available or not
+     */
+    public long getUntil() {
+        return until;
+    }
+
+    /**
+     * Sets the timestamp when the room gets available or not
+     * @param until the timestamp when the room gets available or not
+     */
+    public void setUntil(long until) {
+        this.until = until;
+    }
+
     @Override public int compare(Room o1, Room o2) {
         return o1.getName().compareTo(o2.getName());
     }
@@ -122,4 +154,8 @@ public class Room implements Comparator<Room> {
     private String name;
     @ColumnInfo(name = "events")
     private List<Event> events;
+    @ColumnInfo(name = "isFree")
+    private boolean isFree;
+    @ColumnInfo(name = "until")
+    private long until;
 }
