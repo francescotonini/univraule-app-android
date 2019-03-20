@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2018-2019 Francesco Tonini <francescoantoniotonini@gmail.com>
+ * Copyright (c) 2018 Francesco Tonini <francescoantoniotonini@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,11 +39,15 @@ buildscript {
         classpath 'com.google.gms:google-services:4.0.1'
         classpath 'io.fabric.tools:gradle:1.26.1'
         classpath 'com.google.firebase:firebase-plugins:1.1.5'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
     }
 }
 
 allprojects {
     repositories {
+        google()
         jcenter()
 
         maven {
