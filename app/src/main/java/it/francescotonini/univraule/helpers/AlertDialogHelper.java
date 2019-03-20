@@ -24,7 +24,9 @@
 
 package it.francescotonini.univraule.helpers;
 
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
+
+import android.content.Context;
 import android.content.DialogInterface;
 
 import it.francescotonini.univraule.views.BaseActivity;
@@ -69,5 +71,19 @@ public class AlertDialogHelper {
         });
 
         builder.create().show();
+    }
+
+    /**
+     * Generate and show a {@link AlertDialog} with one button
+     * @param context context where the dialog should be generated
+     * @param title dialog's title
+     * @param message dialog's message
+     * @param buttonText text shown on the button
+     * @return an instance of {@link AlertDialog}
+     */
+    public static AlertDialog show(Context context, int title, int message, int buttonText) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(title).setMessage(message).setCancelable(false).setPositiveButton(buttonText, null);
+        return builder.show();
     }
 }

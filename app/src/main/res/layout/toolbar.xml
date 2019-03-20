@@ -23,7 +23,7 @@
   ~ SOFTWARE.
   -->
 
-<android.support.v7.widget.Toolbar
+<androidx.appcompat.widget.Toolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -32,5 +32,5 @@
     android:minHeight="@dimen/abc_action_bar_default_height_material"
     android:background="@color/primary"
     android:elevation="@dimen/toolbar_elevation"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    app:popupTheme="@style/Theme.AppCompat.DayNight"
     app:theme="@style/app_theme_toolbar" />

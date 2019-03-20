@@ -32,7 +32,7 @@
         app:showAsAction="collapseActionView|always"
         android:actionLayout="@layout/toolbar"
         android:title="@string/menu_main_search"
-        app:actionViewClass="android.support.v7.widget.SearchView"/>
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 
     <item
         android:id="@+id/menu_main_change_offices"

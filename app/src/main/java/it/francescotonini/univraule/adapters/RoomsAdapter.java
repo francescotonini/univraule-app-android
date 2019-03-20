@@ -24,25 +24,20 @@
 
 package it.francescotonini.univraule.adapters;
 
-import android.databinding.DataBindingUtil;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.databinding.DataBindingUtil;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
-import it.francescotonini.univraule.Logger;
 import it.francescotonini.univraule.R;
 import it.francescotonini.univraule.databinding.ItemRoomBinding;
 import it.francescotonini.univraule.helpers.DateToStringFormatter;
-import it.francescotonini.univraule.models.Event;
 import it.francescotonini.univraule.models.Room;
 
 /**
@@ -156,22 +151,12 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.ViewHolder> 
             binding.itemRoomOfficeText.setText(this.room.getOfficeName());
 
             if (!room.isFree()) {
-                binding.itemRoomTimeDescriptionText.setText(R.string.item_room_available_from);
-                binding.itemRoomEtaDescriptionText.setText(R.string.item_room_busy_for);
                 binding.itemRoomTimeText.setText(DateToStringFormatter.getTimeString(room.getUntil()));
-                binding.itemRoomEtaText.setText(DateToStringFormatter.getETAString(room.getUntil()));
-
-                binding.itemRoomTopRelativelayout.setBackgroundResource(R.color.dark_red);
-                binding.itemRoomBottomLinearlayout.setBackgroundResource(R.color.red);
+                binding.itemRoomTopRelativelayout.setBackgroundResource(R.color.red);
             }
             else {
-                binding.itemRoomTimeDescriptionText.setText(R.string.item_room_busy_from);
-                binding.itemRoomEtaDescriptionText.setText(R.string.item_room_available_for);
                 binding.itemRoomTimeText.setText(DateToStringFormatter.getTimeString(room.getUntil()));
-                binding.itemRoomEtaText.setText(DateToStringFormatter.getETAString(room.getUntil()));
-
-                binding.itemRoomTopRelativelayout.setBackgroundResource(R.color.dark_green);
-                binding.itemRoomBottomLinearlayout.setBackgroundResource(R.color.green);
+                binding.itemRoomTopRelativelayout.setBackgroundResource(R.color.green);
             }
         }
 

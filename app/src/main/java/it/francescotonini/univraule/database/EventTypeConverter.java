@@ -24,7 +24,7 @@
 
 package it.francescotonini.univraule.database;
 
-import android.arch.persistence.room.TypeConverter;
+import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -33,7 +33,6 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import it.francescotonini.univraule.models.Event;
-import it.francescotonini.univraule.models.Room;
 
 /**
  * Converts a list of event to gson

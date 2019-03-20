@@ -26,7 +26,7 @@ package it.francescotonini.univraule.views;
 
 import android.content.ContextWrapper;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import com.pixplicity.easyprefs.library.Prefs;
 import it.francescotonini.univraule.BuildConfig;
 import it.francescotonini.univraule.Logger;

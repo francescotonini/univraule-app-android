@@ -24,7 +24,7 @@
 
 package it.francescotonini.univraule.viewmodels;
 
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel;
 import it.francescotonini.univraule.views.BaseActivity;
 
 /**

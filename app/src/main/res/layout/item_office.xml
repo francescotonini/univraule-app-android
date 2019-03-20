@@ -30,9 +30,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/spacing_extra_large"
-        android:paddingBottom="@dimen/spacing_medium"
-        android:paddingTop="@dimen/spacing_medium"
+        android:minHeight="@dimen/spacing_fortyeight"
+        android:paddingBottom="@dimen/spacing_eight"
+        android:paddingTop="@dimen/spacing_eight"
         android:background="?attr/selectableItemBackground"
         android:clickable="true">
 
@@ -40,8 +40,8 @@
             android:id="@+id/item_office_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/spacing_large"
-            android:layout_marginRight="@dimen/spacing_extra_huge"
+            android:layout_marginLeft="@dimen/spacing_sixteen"
+            android:layout_marginRight="@dimen/spacing_sixtyfour"
             android:layout_centerVertical="true"
             tools:text="Office"
             style="@style/primary_text_view" />
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/spacing_large" />
+            android:layout_marginRight="@dimen/spacing_sixteen" />
 
     </RelativeLayout>
 </layout>

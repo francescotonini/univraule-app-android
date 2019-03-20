@@ -24,8 +24,8 @@
 
 package it.francescotonini.univraule.database;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
+import androidx.room.Database;
+import androidx.room.RoomDatabase;
 import it.francescotonini.univraule.database.dao.OfficeDao;
 import it.francescotonini.univraule.database.dao.RoomDao;
 import it.francescotonini.univraule.models.Office;

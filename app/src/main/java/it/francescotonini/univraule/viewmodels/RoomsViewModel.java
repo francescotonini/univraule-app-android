@@ -24,8 +24,8 @@
 
 package it.francescotonini.univraule.viewmodels;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 import it.francescotonini.univraule.models.Room;
 import it.francescotonini.univraule.repositories.RoomsRepository;

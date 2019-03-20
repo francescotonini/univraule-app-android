@@ -26,12 +26,26 @@ package it.francescotonini.univraule;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.ContextWrapper;
+
+import com.pixplicity.easyprefs.library.Prefs;
+
+import androidx.appcompat.app.AppCompatDelegate;
 
 public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+
+        new Prefs.Builder()
+                .setContext(this)
+                .setMode(ContextWrapper.MODE_PRIVATE)
+                .setPrefsName(BuildConfig.APPLICATION_ID)
+                .setUseDefaultSharedPreference(true)
+                .build();
+
+        AppCompatDelegate.setDefaultNightMode(Prefs.getInt("theme", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM));
     }
 
     /**

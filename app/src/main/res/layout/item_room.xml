@@ -28,33 +28,37 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto">
     <data>
     </data>
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/item_room_cardview"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_extra_extra_medium"
-        android:layout_marginLeft="@dimen/spacing_medium"
-        android:layout_marginRight="@dimen/spacing_medium"
-        card_view:cardCornerRadius="6dp">
+        android:layout_marginTop="@dimen/spacing_twelve"
+        android:layout_marginLeft="@dimen/spacing_sixteen"
+        android:layout_marginRight="@dimen/spacing_sixteen"
+        card_view:cardCornerRadius="6dp"
+        card_view:cardElevation="0dp">
         <RelativeLayout
             android:id="@+id/item_room_top_relativelayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/spacing_eight"
+            android:paddingBottom="@dimen/spacing_eight"
+            android:paddingRight="@dimen/spacing_eight"
+            android:paddingLeft="@dimen/spacing_eight">
 
             <!-- First row -->
             <TextView
                 android:id="@+id/item_room_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_extra_medium"
-                android:layout_marginLeft="@dimen/spacing_large"
-                android:layout_marginRight="@dimen/spacing_large"
                 android:textColor="@android:color/white"
                 tools:text="Room"
                 android:maxLines="1"
                 android:scrollHorizontally="true"
                 android:ellipsize="end"
+                android:layout_marginEnd="@dimen/spacing_eight"
+                android:layout_toStartOf="@id/item_room_time_text"
                 style="@style/cell_primary_text_view" />
 
             <!-- Second row -->
@@ -63,84 +67,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/item_room_text"
-                android:layout_marginLeft="@dimen/spacing_large"
-                android:layout_marginRight="@dimen/spacing_large"
-                android:layout_marginBottom="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/spacing_four"
+                android:layout_marginEnd="@dimen/spacing_eight"
                 android:orientation="horizontal"
                 tools:text="Room"
                 android:maxLines="1"
                 android:scrollHorizontally="true"
                 android:ellipsize="end"
+                android:layout_toStartOf="@id/item_room_time_text"
                 style="@style/cell_secondary_text_view" />
 
-            <LinearLayout
-                android:id="@+id/item_room_bottom_linearlayout"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/item_room_time_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/item_room_office_text"
-                android:paddingTop="@dimen/spacing_medium"
-                android:paddingBottom="@dimen/spacing_extra_medium"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/item_room_time_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/spacing_large"
-                        android:layout_marginRight="@dimen/spacing_large"
-                        android:layout_centerHorizontal="true"
-                        android:orientation="horizontal"
-                        android:layout_below="@id/item_room_time_description_text"
-                        tools:text="--"
-                        style="@style/cell_big_text_view" />
-
-                    <TextView
-                        android:id="@+id/item_room_time_description_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/spacing_large"
-                        android:layout_marginRight="@dimen/spacing_large"
-                        android:layout_centerHorizontal="true"
-                        android:orientation="horizontal"
-                        tools:text="--"
-                        style="@style/cell_tertiary_text_view" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/item_room_eta_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/spacing_large"
-                        android:layout_marginRight="@dimen/spacing_large"
-                        android:layout_centerHorizontal="true"
-                        android:orientation="horizontal"
-                        android:layout_below="@id/item_room_eta_description_text"
-                        tools:text="--"
-                        style="@style/cell_big_text_view" />
-
-                    <TextView
-                        android:id="@+id/item_room_eta_description_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/spacing_large"
-                        android:layout_marginRight="@dimen/spacing_large"
-                        android:layout_centerHorizontal="true"
-                        android:orientation="horizontal"
-                        tools:text="--"
-                        style="@style/cell_tertiary_text_view" />
-                </RelativeLayout>
-
-            </LinearLayout>
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                tools:text="--"
+                style="@style/cell_big_text_view" />
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </layout>

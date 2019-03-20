@@ -24,9 +24,9 @@
 
 package it.francescotonini.univraule.views;
 
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import com.alamkanak.weekview.MonthLoader.MonthChangeListener;
 import com.alamkanak.weekview.WeekViewEvent;
@@ -68,7 +68,7 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
         officeName = getIntent().getStringExtra("officeName");
         roomName = getIntent().getStringExtra("roomName");
 
-        getSupportActionBar().setTitle(roomName);
+        getSupportActionBar().setTitle(getTitle() + " " + roomName);
         binding.activityRoomWeekView.setMonthChangeListener(this);
         binding.activityRoomWeekView.goToHour(7);
     }
@@ -111,7 +111,9 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
             end.setTimeInMillis(e.getEndTimestamp());
             end.set(Calendar.MINUTE, end.get(Calendar.MINUTE) - 1);
 
-            result.add(new WeekViewEvent(e.getName().hashCode(), e.getName(), "", start, end));
+            WeekViewEvent event = new WeekViewEvent(e.getName().hashCode(), e.getName(), "", start, end);
+            event.setColor(getResources().getColor(R.color.accent));
+            result.add(event);
         }
 
         return result;

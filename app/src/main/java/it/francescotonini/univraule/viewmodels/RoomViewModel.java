@@ -24,11 +24,10 @@
 
 package it.francescotonini.univraule.viewmodels;
 
-import android.arch.lifecycle.MutableLiveData;
+import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 
 import it.francescotonini.univraule.models.Event;
-import it.francescotonini.univraule.models.Room;
 import it.francescotonini.univraule.repositories.RoomsRepository;
 import it.francescotonini.univraule.views.BaseActivity;
 

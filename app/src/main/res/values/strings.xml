@@ -24,10 +24,13 @@
 
 <resources>
     <string name="app_name">UniVR Aule</string>
+    <string name="ok">Ok</string>
+    <string name="info">Info</string>
+
     <string name="activity_offices_title">Seleziona sedi</string>
     <string name="activity_main_title">Aule libere</string>
     <string name="activity_settings_title">Impostazioni</string>
-    <string name="activity_room_title">Pianificazione aula</string>
+    <string name="activity_room_title">Aula</string>
 
     <string name="activity_main_sunday">Oggi è domenica, l\'università è chiusa! Riprova domani ;)</string>
 
@@ -36,11 +39,6 @@
     <string name="error_no_offices_selected_title">Errore</string>
     <string name="error_no_offices_selected_message">Nessuna sede selezionata! Riprova</string>
 
-    <string name="item_room_available_for">libera per</string>
-    <string name="item_room_busy_from">occupata dalle</string>
-    <string name="item_room_busy_for">libera tra</string>
-    <string name="item_room_available_from">libera dalle</string>
-
     <string name="menu_offices_save">Salva</string>
     <string name="menu_main_search">Cerca</string>
     <string name="menu_main_change_offices">Cambia sedi</string>
@@ -48,10 +46,14 @@
 
     <string name="preferences_clear_db_title">Pulisci cache aule</string>
     <string name="preferences_clear_db_summary">Se rimuovi i dati in locale l\'app dovrà riscaricare lo stato delle aule dal sito dell\'ateneo</string>
+    <string name="preferences_clean_db_result">Fatto!</string>
+    <string name="preferences_force_dark_theme">Forza tema scuro</string>
+    <string name="preferences_force_dark_theme_false">L\'applicazione si adatta automaticamente al tema impostato dal sistema operativo</string>
+    <string name="preferences_force_dark_theme_true">L\'applicazione forza il tema scuro in ogni momento</string>
+    <string name="preferences_force_dark_theme_message">Il tema di attiverà al prossimo avvio dell\'app</string>
     <string name="preferences_created_by_title">Info</string>
     <string name="preferences_created_by_summary">UniVR Aule è stata sviluppata da Francesco Tonini. I dati sulle aule vengono scaricati da logistica.univr.it</string>
     <string name="preferences_leave_feedback_title">Dubbi, domande, angosce?</string>
     <string name="preferences_leave_feedback_summary">Hai un\'idea per migliorare l\'app? Vuoi segnalare un malfunzionamento! Clicca qui per farmelo sapere ;)</string>
     <string name="preferences_app_version">Versione app</string>
-    <string name="preferences_clean_db_result">Fatto!</string>
 </resources>
