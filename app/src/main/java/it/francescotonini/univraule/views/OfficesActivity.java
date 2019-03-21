@@ -118,8 +118,8 @@ public class OfficesActivity extends BaseActivity implements SwipeRefreshLayout.
 
         getViewModel().saveOffices(adapter.getSelectedOffices());
 
-        if (Prefs.getBoolean("isFirstStart", true)) {
-            Prefs.putBoolean("isFirstStart", false);
+        if (Prefs.getBoolean("isFirstBoot", true)) {
+            Prefs.putBoolean("isFirstBoot", false);
             startActivity(new Intent(this, MainActivity.class));
         }
         else {
