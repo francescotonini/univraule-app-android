@@ -51,17 +51,11 @@ public class BaseRepository {
         this.owner = owner;
 
         // Init db
+        // fallbackToDestructiveMigration() is not ideal. DON'T DO THIS AT HOME
         database = Room.databaseBuilder(App.getContext(),
                 UniVRDatabase.class,
                 "univrauledb")
-                .addMigrations(new Migration(1, 2) {
-                    @Override
-                    public void migrate(@NonNull SupportSQLiteDatabase database) {
-                        database.execSQL("ALTER TABLE room ADD COLUMN until INTEGER;");
-                        database.execSQL("ALTER TABLE room ADD COLUMN isFree INTEGER;");
-                        database.execSQL("DELETE FROM room;");
-                    }
-                })
+                .fallbackToDestructiveMigration()
                 .build();
 
         // Init api
