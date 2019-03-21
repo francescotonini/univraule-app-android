@@ -41,6 +41,7 @@
     <dimen name="spacing_sixteen">16dp</dimen>
     <dimen name="spacing_thirtytwo">32dp</dimen>
     <dimen name="spacing_fortyeight">48dp</dimen>
+    <dimen name="spacing_fiftysix">56dp</dimen>
     <dimen name="spacing_sixtyfour">64dp</dimen>
     <dimen name="spacing_seventy">70dp</dimen>
 </resources>
