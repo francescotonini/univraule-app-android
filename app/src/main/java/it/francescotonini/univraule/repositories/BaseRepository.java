@@ -57,7 +57,7 @@ public class BaseRepository {
                 .addMigrations(new Migration(1, 2) {
                     @Override
                     public void migrate(@NonNull SupportSQLiteDatabase database) {
-                        database.execSQL("DELETE FROM room");
+                        database.execSQL("DROP TABLE room");
                     }
                 })
                 .build();
