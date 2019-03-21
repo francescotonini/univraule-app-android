@@ -45,8 +45,8 @@ public class BootstrapActivity extends BaseActivity {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        boolean isFirstStart = Prefs.getBoolean("isFirstStart", true);
-        Logger.v(BootstrapActivity.class.getSimpleName(), "isFirstStart is " + isFirstStart);
+        boolean isFirstStart = Prefs.getBoolean("isFirstBoot", true);
+        Logger.v(BootstrapActivity.class.getSimpleName(), "isFirstBoot is " + isFirstStart);
         if (isFirstStart) {
             startActivity(new Intent(this, OfficesActivity.class));
         }
