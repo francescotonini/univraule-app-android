@@ -24,6 +24,12 @@
 
 package it.francescotonini.univraule.models;
 
+import com.alamkanak.weekview.WeekViewDisplayable;
+import com.alamkanak.weekview.WeekViewEvent;
+
+import java.util.Calendar;
+import java.util.TimeZone;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
@@ -31,7 +37,7 @@ import androidx.room.Entity;
  * Represents an event inside a {@link Room}
  */
 @Entity
-public class Event {
+public class Event implements WeekViewDisplayable<Event> {
     /**
      * Gets the name of the event
      * @return name of the event
@@ -78,6 +84,16 @@ public class Event {
      */
     public void setEndTimestamp(long endTimestamp) {
         this.endTimestamp = endTimestamp;
+    }
+
+    @Override public WeekViewEvent<Event> toWeekViewEvent() {
+        Calendar start = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
+        start.setTimeInMillis(getStartTimestamp());
+        Calendar end = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
+        end.setTimeInMillis(getEndTimestamp());
+        end.set(Calendar.MINUTE, end.get(Calendar.MINUTE) - 1);
+
+        return new WeekViewEvent<>(getStartTimestamp(), getName(), start, end, "", 0, false, null);
     }
 
     @ColumnInfo(name = "event_name")

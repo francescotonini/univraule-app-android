@@ -24,17 +24,39 @@
 
 package it.francescotonini.univraule.helpers;
 
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
-public class DateToStringFormatter {
-    public static String getTimeString(long endTimestamp) {
-        Date end = new Date(endTimestamp);
+public class DateTimeInterpreter implements com.alamkanak.weekview.DateTimeInterpreter {
+    @Override public String interpretDate(Calendar date) {
+        String dayOfWeek = "";
+        switch (date.get(Calendar.DAY_OF_WEEK)) {
+            case 1:
+                dayOfWeek = "DOM";
+                break;
+            case 2:
+                dayOfWeek = "LUN";
+                break;
+            case 3:
+                dayOfWeek = "MAR";
+                break;
+            case 4:
+                dayOfWeek = "MER";
+                break;
+            case 5:
+                dayOfWeek = "GIO";
+                break;
+            case 6:
+                dayOfWeek = "VEN";
+                break;
+            case 7:
+                dayOfWeek = "SAB";
+                break;
+        }
 
-        return new SimpleDateFormat("HH:mm", Locale.ITALIAN).format(end);
+        return String.format("%s %s/%s", dayOfWeek.toUpperCase(), date.get(Calendar.DAY_OF_MONTH), date.get(Calendar.MONTH) + 1);
+    }
+
+    @Override public String interpretTime(int hour) {
+        return String.format("%s:00", hour);
     }
 }

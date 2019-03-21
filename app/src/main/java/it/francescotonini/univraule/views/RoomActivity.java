@@ -29,6 +29,8 @@ import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import com.alamkanak.weekview.MonthLoader.MonthChangeListener;
+import com.alamkanak.weekview.WeekView;
+import com.alamkanak.weekview.WeekViewDisplayable;
 import com.alamkanak.weekview.WeekViewEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,6 +38,7 @@ import java.util.List;
 import java.util.TimeZone;
 import it.francescotonini.univraule.R;
 import it.francescotonini.univraule.databinding.ActivityRoomBinding;
+import it.francescotonini.univraule.helpers.DateTimeInterpreter;
 import it.francescotonini.univraule.models.Event;
 import it.francescotonini.univraule.viewmodels.RoomViewModel;
 
@@ -69,6 +72,8 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
         roomName = getIntent().getStringExtra("roomName");
 
         getSupportActionBar().setTitle(getTitle() + " " + roomName);
+
+        binding.activityRoomWeekView.setDateTimeInterpreter(new DateTimeInterpreter());
         binding.activityRoomWeekView.setMonthChangeListener(this);
         binding.activityRoomWeekView.goToHour(7);
     }
@@ -79,7 +84,7 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
         getViewModel().getEvents(roomName, officeName)
         .observe(this, result -> {
             events = result;
-            binding.activityRoomWeekView.notifyDatasetChanged();
+            binding.activityRoomWeekView.notifyDataSetChanged();
         });
     }
 
@@ -92,9 +97,10 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
+    @Override
+    public List<WeekViewDisplayable> onMonthChange(Calendar startDate, Calendar endDate) {
         Calendar today = Calendar.getInstance();
-        if (today.get(Calendar.YEAR) != newYear || today.get(Calendar.MONTH) != newMonth) {
+        if (today.get(Calendar.YEAR) != startDate.get(Calendar.YEAR) || today.get(Calendar.MONTH) != startDate.get(Calendar.MONTH)) {
             return new ArrayList<>();
         }
 
@@ -102,7 +108,7 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
             return new ArrayList<>();
         }
 
-        List<WeekViewEvent> result = new ArrayList<>();
+        List<WeekViewDisplayable> result = new ArrayList<>();
         for (Event e : events) {
             Calendar start = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
             start.setTimeInMillis(e.getStartTimestamp());
@@ -111,7 +117,7 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
             end.setTimeInMillis(e.getEndTimestamp());
             end.set(Calendar.MINUTE, end.get(Calendar.MINUTE) - 1);
 
-            WeekViewEvent event = new WeekViewEvent(e.getName().hashCode(), e.getName(), "", start, end);
+            WeekViewEvent event = e.toWeekViewEvent();
             event.setColor(getResources().getColor(R.color.accent));
             result.add(event);
         }
