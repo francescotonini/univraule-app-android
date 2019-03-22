@@ -29,9 +29,10 @@ import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import com.alamkanak.weekview.MonthLoader.MonthChangeListener;
-import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewDisplayable;
 import com.alamkanak.weekview.WeekViewEvent;
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -40,7 +41,8 @@ import it.francescotonini.univraule.R;
 import it.francescotonini.univraule.databinding.ActivityRoomBinding;
 import it.francescotonini.univraule.helpers.DateTimeInterpreter;
 import it.francescotonini.univraule.models.Event;
-import it.francescotonini.univraule.viewmodels.RoomViewModel;
+import it.francescotonini.univraule.models.Room;
+import it.francescotonini.univraule.viewmodels.BaseViewModel;
 
 public class RoomActivity extends BaseActivity implements MonthChangeListener {
     @Override protected int getLayoutId() {
@@ -53,12 +55,8 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
-    @Override protected RoomViewModel getViewModel() {
-        if (viewModel == null) {
-            viewModel = new RoomViewModel(this);
-        }
-
-        return viewModel;
+    @Override protected BaseViewModel getViewModel() {
+        return null;
     }
 
     @Override protected void setBinding() {
@@ -68,24 +66,19 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        officeName = getIntent().getStringExtra("officeName");
-        roomName = getIntent().getStringExtra("roomName");
+        // Get room from intent
+        room = (new Gson()).fromJson(getIntent().getStringExtra("room"), Room.class);
 
-        getSupportActionBar().setTitle(getTitle() + " " + roomName);
+        getSupportActionBar().setTitle(getTitle() + " " + room.getName());
 
         binding.activityRoomWeekView.setDateTimeInterpreter(new DateTimeInterpreter());
         binding.activityRoomWeekView.setMonthChangeListener(this);
-        binding.activityRoomWeekView.goToHour(7);
     }
 
     @Override protected void onResume() {
         super.onResume();
 
-        getViewModel().getEvents(roomName, officeName)
-        .observe(this, result -> {
-            events = result;
-            binding.activityRoomWeekView.notifyDataSetChanged();
-        });
+        binding.activityRoomWeekView.goToHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -104,12 +97,12 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
             return new ArrayList<>();
         }
 
-        if (events == null) {
+        if (room.getEvents() == null) {
             return new ArrayList<>();
         }
 
         List<WeekViewDisplayable> result = new ArrayList<>();
-        for (Event e : events) {
+        for (Event e : room.getEvents()) {
             Calendar start = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
             start.setTimeInMillis(e.getStartTimestamp());
 
@@ -125,9 +118,6 @@ public class RoomActivity extends BaseActivity implements MonthChangeListener {
         return result;
     }
 
-    private String officeName;
-    private String roomName;
-    private List<Event> events;
-    private RoomViewModel viewModel;
+    private Room room;
     private ActivityRoomBinding binding;
 }
