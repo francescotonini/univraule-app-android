@@ -66,16 +66,6 @@ public class RoomsRepository extends BaseRepository {
     }
 
     /**
-     * Gets a room that meets the criteria provided
-     * @param roomName room name
-     * @param officeName office name
-     * @return
-     */
-    public LiveData<Room> getRoom(String roomName, String officeName) {
-        return getDatabase().roomDao().getRoom(roomName, officeName);
-    }
-
-    /**
      * Deletes every {@link Room} from database
      */
     public void clearAll() {
@@ -101,29 +91,27 @@ public class RoomsRepository extends BaseRepository {
             for (Office office : offices) {
                 Logger.i(RoomsRepository.class.getSimpleName(), "Loading rooms from office " + office.getName());
 
-                getExecutor().execute(() -> {
-                    getApi()
-                    .getRooms(office.getId())
-                    .enqueue(new Callback<List<Room>>() {
-                        @Override public void onResponse(Call<List<Room>> call, Response<List<Room>> response) {
-                            for (Room room : response.body()) {
-                                room.setOfficeName(office.getName());
-                            }
-
-                            getExecutor()
-                            .execute(() -> {
-                                getDatabase().roomDao().deleteByOffice(office.getName());
-                                getDatabase().roomDao().insert(response.body());
-                            });
+                getExecutor().execute(() -> getApi()
+                .getRooms(office.getId())
+                .enqueue(new Callback<List<Room>>() {
+                    @Override public void onResponse(Call<List<Room>> call, Response<List<Room>> response) {
+                        for (Room room : response.body()) {
+                            room.setOfficeName(office.getName());
                         }
 
-                        @Override public void onFailure(Call<List<Room>> call, Throwable t) {
-                            Logger.e(OfficesRepository.class.getSimpleName(), t.getMessage());
+                        getExecutor()
+                        .execute(() -> {
+                            getDatabase().roomDao().deleteByOffice(office.getName());
+                            getDatabase().roomDao().insert(response.body());
+                        });
+                    }
 
-                            rooms.setValue(null);
-                        }
-                    });
-                });
+                    @Override public void onFailure(Call<List<Room>> call, Throwable t) {
+                        Logger.e(OfficesRepository.class.getSimpleName(), t.getMessage());
+
+                        rooms.setValue(null);
+                    }
+                }));
             }
         });
     }

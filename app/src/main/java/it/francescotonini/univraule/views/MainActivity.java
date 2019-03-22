@@ -27,13 +27,20 @@ package it.francescotonini.univraule.views;
 import android.content.Intent;
 import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
+
+import androidx.lifecycle.Observer;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.google.gson.Gson;
+
 import java.util.Calendar;
+import java.util.List;
+
 import it.francescotonini.univraule.Logger;
 import it.francescotonini.univraule.R;
 import it.francescotonini.univraule.adapters.RoomsAdapter;
@@ -47,7 +54,7 @@ import it.francescotonini.univraule.viewmodels.RoomsViewModel;
  */
 public class MainActivity extends BaseActivity
         implements SearchView.OnQueryTextListener, SwipeRefreshLayout.OnRefreshListener,
-        RoomsAdapter.OnItemClickListener {
+        RoomsAdapter.OnItemClickListener, Observer<List<Room>> {
     @Override protected int getLayoutId() {
         return R.layout.activity_main;
     }
@@ -93,6 +100,10 @@ public class MainActivity extends BaseActivity
         adapter = new RoomsAdapter(this);
         binding.activityMainRecyclerView.setAdapter(adapter);
         binding.activityMainRefreshlayout.setOnRefreshListener(this);
+
+        // Standard loading
+        binding.activityMainRefreshlayout.setRefreshing(true);
+        getViewModel().getRooms().observe(this, this);
     }
 
     @Override protected void onResume() {
@@ -107,23 +118,7 @@ public class MainActivity extends BaseActivity
             return;
         }
 
-        // Standard loading
-        binding.activityMainRefreshlayout.setRefreshing(true);
-        getViewModel().getRooms().observe(this, rooms -> {
-            if (rooms == null) {
-                SnackBarHelper.show(binding.activityMainRecyclerView, R.string.error_generic_message);
-
-                return;
-            }
-
-            Logger.v(MainActivity.class.getSimpleName(), "# of rooms: " + rooms.size());
-            if (rooms.size() == 0) {
-                return;
-            }
-
-            binding.activityMainRefreshlayout.setRefreshing(false);
-            adapter.update(rooms);
-        });
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -142,16 +137,30 @@ public class MainActivity extends BaseActivity
     @Override public void onRefresh() {
         Logger.v(MainActivity.class.getSimpleName(), "refreshing rooms");
 
-        binding.activityMainRefreshlayout.setRefreshing(true);
-        onResume();
+        getViewModel().getRooms().observe(this, this);
     }
 
     @Override public void onItemClick(Room room) {
         Intent i = new Intent(this, RoomActivity.class);
-        i.putExtra("roomName", room.getName());
-        i.putExtra("officeName", room.getOfficeName());
-
+        i.putExtra("room", (new Gson()).toJson(room));
         startActivity(i);
+    }
+
+    @Override
+    public void onChanged(List<Room> rooms) {
+        if (rooms == null) {
+            SnackBarHelper.show(binding.activityMainRecyclerView, R.string.error_generic_message);
+
+            return;
+        }
+
+        Logger.v(MainActivity.class.getSimpleName(), "# of rooms: " + rooms.size());
+        if (rooms.size() == 0) {
+            return;
+        }
+
+        binding.activityMainRefreshlayout.setRefreshing(false);
+        adapter.update(rooms);
     }
 
     private RoomsAdapter adapter;
